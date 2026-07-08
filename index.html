@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>日用品ストック</title>
+<style>
+  :root {
+    --bg: #f4f6f4;
+    --card: #ffffff;
+    --ink: #223;
+    --sub: #778;
+    --line: #dde3dd;
+    --accent: #2e8b57;
+    --accent-soft: #e6f4ec;
+    --warn: #e8a000;
+    --warn-soft: #fdf3dc;
+    --danger: #d33a2f;
+    --danger-soft: #fdeae8;
+    --amazon: #ff9900;
+    --rakuten: #bf0000;
+    --yahoo: #ff0033;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; font-size: 15px; }
+  header { position: sticky; top: 0; z-index: 20; background: var(--accent); color: #fff;
+    padding: 10px 16px 0; box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+  header h1 { margin: 0 0 8px; font-size: 18px; font-weight: 700; }
+  header h1 small { font-weight: 400; opacity: .8; font-size: 12px; margin-left: 8px; }
+  nav { display: flex; gap: 4px; max-width: 980px; }
+  nav button { flex: 1; border: none; background: rgba(255,255,255,.15); color: #fff;
+    padding: 9px 4px; font-size: 14px; border-radius: 8px 8px 0 0; cursor: pointer; }
+  nav button.on { background: var(--bg); color: var(--ink); font-weight: 700; }
+  main { max-width: 980px; margin: 0 auto; padding: 14px 14px 80px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 12px 14px; margin-bottom: 12px; }
+  .card h2 { font-size: 15px; margin: 0 0 8px; color: var(--accent); }
+  button { font-family: inherit; }
+  .btn { border: 1px solid var(--line); background: #fff; color: var(--ink); padding: 8px 14px;
+    border-radius: 8px; font-size: 14px; cursor: pointer; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 700; }
+  .btn.danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+  .btn.small { padding: 4px 10px; font-size: 12px; border-radius: 6px; }
+  .btn:disabled { opacity: .4; cursor: default; }
+  input[type=text], input[type=number], input[type=date], textarea, select {
+    font-family: inherit; font-size: 14px; padding: 7px 9px; border: 1px solid var(--line);
+    border-radius: 8px; background: #fff; color: var(--ink); }
+  textarea { width: 100%; }
+  .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .muted { color: var(--sub); font-size: 12px; }
+  .chip { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 12px;
+    background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+  .chip.warn { background: var(--warn-soft); color: #9a6b00; }
+  .chip.danger { background: var(--danger-soft); color: var(--danger); }
+  .sitebadge { display: inline-flex; align-items: center; justify-content: center; min-width: 20px;
+    height: 20px; padding: 0 5px; border-radius: 5px; color: #fff; font-size: 11px; font-weight: 800; }
+  .sitebadge.amazon { background: var(--amazon); }
+  .sitebadge.rakuten { background: var(--rakuten); }
+  .sitebadge.yahoo { background: var(--yahoo); }
+  /* ストック行 */
+  .cat-title { font-size: 13px; font-weight: 700; color: var(--sub); margin: 16px 2px 6px; }
+  .item { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 10px 12px; margin-bottom: 8px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .item.needs { border-color: var(--warn); background: var(--warn-soft); }
+  .item.urgent { border-color: var(--danger); background: var(--danger-soft); }
+  .item .info { flex: 1 1 240px; min-width: 0; cursor: pointer; }
+  .item .name { font-weight: 700; font-size: 15px; }
+  .item .last { font-size: 12px; color: var(--sub); margin-top: 3px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .lvl { display: flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .lvl button { border: none; background: #fff; padding: 7px 10px; font-size: 12px; cursor: pointer; color: var(--sub); }
+  .lvl button.on2 { background: var(--accent); color: #fff; font-weight: 700; }
+  .lvl button.on1 { background: var(--warn); color: #fff; font-weight: 700; }
+  .lvl button.on0 { background: var(--danger); color: #fff; font-weight: 700; }
+  .stock { display: flex; align-items: center; gap: 6px; }
+  .stock button { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line);
+    background: #fff; font-size: 18px; cursor: pointer; }
+  .stock .n { min-width: 52px; text-align: center; font-weight: 700; }
+  .stock .n small { font-weight: 400; color: var(--sub); }
+  /* 取込確認 */
+  .order-head { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding: 4px 0; }
+  .prod { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; border-top: 1px dashed var(--line);
+    padding: 8px 0; }
+  .prod .pname { flex: 1 1 260px; font-size: 14px; }
+  .prod input.qty { width: 56px; }
+  .prod input.price { width: 90px; }
+  .prod select { max-width: 260px; }
+  .prod.dup { opacity: .55; }
+  .drop { border: 2px dashed var(--line); border-radius: var(--radius); padding: 22px; text-align: center;
+    color: var(--sub); background: #fff; }
+  .drop.over { border-color: var(--accent); background: var(--accent-soft); }
+  /* シート・モーダル・トースト */
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 50; display: none; }
+  .overlay.show { display: block; }
+  .sheet { position: fixed; left: 50%; transform: translateX(-50%); bottom: 0; width: min(560px, 100%);
+    background: #fff; border-radius: 16px 16px 0 0; padding: 16px; z-index: 60; box-shadow: 0 -4px 24px rgba(0,0,0,.2); }
+  .sheet h3 { margin: 0 0 10px; font-size: 15px; }
+  .sheet .opt { display: flex; gap: 10px; align-items: center; width: 100%; text-align: left;
+    border: 1px solid var(--line); background: #fff; border-radius: 10px; padding: 12px; margin-bottom: 8px;
+    font-size: 14px; cursor: pointer; }
+  .modal { position: fixed; left: 50%; top: 50%; transform: translate(-50%,-50%); width: min(560px, 94%);
+    max-height: 88vh; overflow: auto; background: #fff; border-radius: 14px; padding: 18px; z-index: 60;
+    box-shadow: 0 8px 32px rgba(0,0,0,.25); }
+  .modal h3 { margin: 0 0 12px; }
+  .field { margin-bottom: 10px; }
+  .field label { display: block; font-size: 12px; color: var(--sub); margin-bottom: 3px; }
+  .field input[type=text], .field input[type=number], .field select { width: 100%; }
+  #toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: 24px; background: #333;
+    color: #fff; padding: 10px 18px; border-radius: 999px; font-size: 14px; z-index: 99; opacity: 0;
+    transition: opacity .25s; pointer-events: none; max-width: 90%; }
+  #toast.show { opacity: 1; }
+  .st-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .st-table td { border-bottom: 1px solid var(--line); padding: 5px 8px; }
+  .ok { color: var(--accent); font-weight: 700; }
+  .ng { color: var(--danger); font-weight: 700; }
+  .hist { display: flex; gap: 10px; align-items: center; border-bottom: 1px solid var(--line); padding: 8px 2px; font-size: 14px; flex-wrap: wrap; }
+  .hist .d { color: var(--sub); font-size: 12px; min-width: 78px; }
+  .summary-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <h1>🧺 日用品ストック<small id="verLabel"></small></h1>
+  <nav>
+    <button id="tab-stock" onclick="switchTab('stock')">ストック</button>
+    <button id="tab-import" onclick="switchTab('import')">取り込み</button>
+    <button id="tab-history" onclick="switchTab('history')">履歴</button>
+    <button id="tab-settings" onclick="switchTab('settings')">設定</button>
+  </nav>
+</header>
+<main id="main"></main>
+<div class="overlay" id="overlay" onclick="closeLayers()"></div>
+<div id="layer"></div>
+<div id="toast"></div>
+<input type="file" id="filePick" multiple accept=".eml,.mbox,.txt,message/rfc822" style="display:none">
+<input type="file" id="bakPick" accept=".json" style="display:none">
+
+<script>
+'use strict';
+const SAMPLES = {"amazon": "From: \"Amazon.co.jp\" <auto-confirm@amazon.co.jp>\r\nTo: hata@example.com\r\nSubject: =?UTF-8?B?QW1hem9uLmNvLmpwIOOBlOazqOaWh+OBrueiuuiqjQ==?=\r\nDate: Tue, 23 Jun 2026 10:15:00 +0900\r\nMIME-Version: 1.0\r\nContent-Type: multipart/alternative; boundary=\"----=_Part_12345\"\r\n\r\n------=_Part_12345\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n=E3=81=AF=E3=81=9F=E6=A7=98\n\nAmazon.co.jp=E3=82=92=E3=81=94=E5=88=A9=E7=94=A8=E3=81=84=E3=81=9F=E3=81=A0=\n=E3=81=8D=E3=81=82=E3=82=8A=E3=81=8C=E3=81=A8=E3=81=86=E3=81=94=E3=81=96=E3=\n=81=84=E3=81=BE=E3=81=99=E3=80=82\n=E3=81=94=E6=B3=A8=E6=96=87=E3=81=AE=E7=A2=BA=E8=AA=8D=E3=82=92=E3=81=8A=E7=\n=9F=A5=E3=82=89=E3=81=9B=E3=81=84=E3=81=9F=E3=81=97=E3=81=BE=E3=81=99=E3=80=\n=82\n\n=E6=B3=A8=E6=96=87=E7=95=AA=E5=8F=B7: 249-1234567-1234567\n\n=E3=82=A2=E3=82=BF=E3=83=83=E3=82=AF ZERO =E6=B4=97=E6=BF=AF=E6=B4=97=E5=89=\n=A4 =E8=A9=B0=E3=82=81=E6=9B=BF=E3=81=88 1800g\n=E6=95=B0=E9=87=8F: 1\n=EF=BF=A51,234\n\n=E3=82=A8=E3=83=AA=E3=82=A8=E3=83=BC=E3=83=AB =E3=83=86=E3=82=A3=E3=83=83=\n=E3=82=B7=E3=83=A5=E3=83=9A=E3=83=BC=E3=83=91=E3=83=BC 180=E7=B5=84=C3=975=\n=E7=AE=B1\n=E6=95=B0=E9=87=8F: 2\n=EF=BF=A5498\n\n=E6=B3=A8=E6=96=87=E5=90=88=E8=A8=88: =EF=BF=A52,230\n\r\n------=_Part_12345\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\nPGh0bWw+PGJvZHk+CjxwPuOBr+OBn+anmDwvcD4KPHA+QW1hem9uLmNvLmpw44KS44GU5Yip55So\r\n44GE44Gf44Gg44GN44GC44KK44GM44Go44GG44GU44GW44GE44G+44GZ44CC44GU5rOo5paH44Gu\r\n56K66KqN44KS44GK55+l44KJ44Gb44GE44Gf44GX44G+44GZ44CCPC9wPgo8cD7ms6jmlofnlarl\r\nj7c6IDI0OS0xMjM0NTY3LTEyMzQ1Njc8L3A+Cjx0YWJsZT4KPHRyPjx0ZD48YSBocmVmPSJodHRw\r\nczovL3d3dy5hbWF6b24uY28uanAvZHAvQjAwRVhNUEwwMT9yZWZfPXBlXzEyMyI+44Ki44K/44OD\r\n44KvIFpFUk8g5rSX5r+v5rSX5YmkIOipsOOCgeabv+OBiCAxODAwZzwvYT48L3RkPjx0ZD7mlbDp\r\nh486IDE8L3RkPjx0ZD7vv6UxLDIzNDwvdGQ+PC90cj4KPHRyPjx0ZD48YSBocmVmPSJodHRwczov\r\nL3d3dy5hbWF6b24uY28uanAvZ3AvcHJvZHVjdC9CMDBFWE1QTDAyL3JlZj14eXoiPuOCqOODquOC\r\nqOODvOODqyDjg4bjgqPjg4Pjgrfjg6Xjg5rjg7zjg5Hjg7wgMTgw57WEw5c1566xPC9hPjwvdGQ+\r\nPHRkPuaVsOmHjzogMjwvdGQ+PHRkPu+/pTQ5ODwvdGQ+PC90cj4KPC90YWJsZT4KPHA+5rOo5paH\r\n5ZCI6KiIOiDvv6UyLDIzMDwvcD4KPC9ib2R5PjwvaHRtbD4=\r\n------=_Part_12345--\r\n", "rakuten": "From: =?ISO-2022-JP?B?GyRCM1pFNztUPmwbKEI=?= <order@rakuten.co.jp>\r\nTo: hata@example.com\r\nSubject: =?ISO-2022-JP?B?GyRCIVozWkU3O1Q+bCFbQ21KOEZiTUYkNDNORychSjwrRjBHWz8uJWEhPCVrIUsbKEI=?=\r\nDate: Mon, 15 Jun 2026 21:30:20 +0900\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=ISO-2022-JP\r\nContent-Transfer-Encoding: base64\r\n\r\nGyRCJE8kP01NGyhCCgobJEIkMyROJD8kUyRPM1pFNztUPmwkRyROJDRDbUo4JCIkaiQsJEgkJiQ0\r\nJDYkJCReJDkhIxsoQgoKWxskQjx1Q21IVjlmGyhCXSAxMjM0NTYtMjAyNjA2MTUtMDAxMjM0NTY3\r\nOApbGyRCQ21KOEZ8O34bKEJdIDIwMjYtMDYtMTUgMjE6MzA6MTIKChskQiIjPiZJSj5wSnMbKEIK\r\nGyRCPiZJSkw+ISclKCVqJSghPCVrGyhCIBskQiVIJSQlbCVDJUglWiE8JVEhPBsoQiAxMhskQiVt\r\nITwlaxsoQiAzGyRCR1w0LCQtGyhCChskQkMxMkEhJxsoQjEsNDgwGyRCMV8bKEIKGyRCOEQ/dCEn\r\nGyhCMgobJEI+JklKGyhCVVJMGyRCIScbKEJodHRwczovL2l0ZW0ucmFrdXRlbi5jby5qcC9zYW1w\r\nbGVzaG9wL2VsbGVhaXItMTJyLwoKGyRCPiZJSkw+ISclLSVlJS0lZSVDJUgbKEIgGyRCPyk0b01R\r\nQHY6XhsoQiAbJEI1TSRhQlgkKBsoQiA3NzBtbAobJEJDMTJBIScbKEIzMjgbJEIxXxsoQgobJEI4\r\nRD90IScbKEIzChskQj4mSUobKEJVUkwbJEIhJxsoQmh0dHBzOi8vaXRlbS5yYWt1dGVuLmNvLmpw\r\nL3NhbXBsZXNob3Ava3l1a3l1dHRvLTc3MC8KChskQj4uN1cbKEIgMyw5NDQbJEIxXxsoQgo=\r\n", "yahoo": "From: =?UTF-8?B?WWFob28h44K344On44OD44OU44Oz44Kw?= <shopping-order-master@mail.yahoo.co.jp>\r\nTo: hata@example.com\r\nSubject: =?UTF-8?B?WWFob28h44K344On44OD44OU44Oz44Kw44Gn44Gu44GU5rOo5paH44Gu56K66KqN?=\r\nDate: Sat, 20 Jun 2026 14:05:30 +0900\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\n44Gv44Gf5qeYCgrjgZPjga7jgZ/jgbPjga/jgZTms6jmlofjgYTjgZ/jgaDjgY3oqqDjgavjgYLj\r\ngorjgYzjgajjgYbjgZTjgZbjgYTjgb7jgZnjgIIKCuOBlOazqOaWh+eVquWPt++8mnNhbXBsZXNo\r\nb3AtMTAwMTIzNDUK44GU5rOo5paH5pel5pmC77yaMjAyNuW5tDbmnIgyMOaXpSAxNOaZgjA15YiG\r\nCgrilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDi\r\nlIDilIAK5ZWG5ZOB5ZCN77ya44Kt44OD44OB44Oz5rOh44OP44Kk44K/44O8IOODj+ODs+ODh+OC\r\no+OCueODl+ODrOODvCA0MDBtbArmlbDph4/vvJoyCuS+oeagvO+8mjI0OOWGhu+8iOeojui+vO+8\r\niQpodHRwczovL3N0b3JlLnNob3BwaW5nLnlhaG9vLmNvLmpwL3NhbXBsZXNob3AvYXdhaGFpdGVy\r\nLTQwMC5odG1sCuKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU\r\ngOKUgOKUgOKUgOKUgArllYblk4HlkIjoqIjjgIA0OTblhoYK6YCB5paZ44CANTUw5YaGCg==\r\n", "mbox": "From auto-confirm@amazon.co.jp Tue Jun 23 10:15:00 2026\r\nFrom: \"Amazon.co.jp\" <auto-confirm@amazon.co.jp>\r\nTo: hata@example.com\r\nSubject: =?UTF-8?B?QW1hem9uLmNvLmpwIOOBlOazqOaWh+OBrueiuuiqjQ==?=\r\nDate: Tue, 23 Jun 2026 10:15:00 +0900\r\nMIME-Version: 1.0\r\nContent-Type: multipart/alternative; boundary=\"----=_Part_12345\"\r\n\r\n------=_Part_12345\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n=E3=81=AF=E3=81=9F=E6=A7=98\n\nAmazon.co.jp=E3=82=92=E3=81=94=E5=88=A9=E7=94=A8=E3=81=84=E3=81=9F=E3=81=A0=\n=E3=81=8D=E3=81=82=E3=82=8A=E3=81=8C=E3=81=A8=E3=81=86=E3=81=94=E3=81=96=E3=\n=81=84=E3=81=BE=E3=81=99=E3=80=82\n=E3=81=94=E6=B3=A8=E6=96=87=E3=81=AE=E7=A2=BA=E8=AA=8D=E3=82=92=E3=81=8A=E7=\n=9F=A5=E3=82=89=E3=81=9B=E3=81=84=E3=81=9F=E3=81=97=E3=81=BE=E3=81=99=E3=80=\n=82\n\n=E6=B3=A8=E6=96=87=E7=95=AA=E5=8F=B7: 249-1234567-1234567\n\n=E3=82=A2=E3=82=BF=E3=83=83=E3=82=AF ZERO =E6=B4=97=E6=BF=AF=E6=B4=97=E5=89=\n=A4 =E8=A9=B0=E3=82=81=E6=9B=BF=E3=81=88 1800g\n=E6=95=B0=E9=87=8F: 1\n=EF=BF=A51,234\n\n=E3=82=A8=E3=83=AA=E3=82=A8=E3=83=BC=E3=83=AB =E3=83=86=E3=82=A3=E3=83=83=\n=E3=82=B7=E3=83=A5=E3=83=9A=E3=83=BC=E3=83=91=E3=83=BC 180=E7=B5=84=C3=975=\n=E7=AE=B1\n=E6=95=B0=E9=87=8F: 2\n=EF=BF=A5498\n\n=E6=B3=A8=E6=96=87=E5=90=88=E8=A8=88: =EF=BF=A52,230\n\r\n------=_Part_12345\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\nPGh0bWw+PGJvZHk+CjxwPuOBr+OBn+anmDwvcD4KPHA+QW1hem9uLmNvLmpw44KS44GU5Yip55So\r\n44GE44Gf44Gg44GN44GC44KK44GM44Go44GG44GU44GW44GE44G+44GZ44CC44GU5rOo5paH44Gu\r\n56K66KqN44KS44GK55+l44KJ44Gb44GE44Gf44GX44G+44GZ44CCPC9wPgo8cD7ms6jmlofnlarl\r\nj7c6IDI0OS0xMjM0NTY3LTEyMzQ1Njc8L3A+Cjx0YWJsZT4KPHRyPjx0ZD48YSBocmVmPSJodHRw\r\nczovL3d3dy5hbWF6b24uY28uanAvZHAvQjAwRVhNUEwwMT9yZWZfPXBlXzEyMyI+44Ki44K/44OD\r\n44KvIFpFUk8g5rSX5r+v5rSX5YmkIOipsOOCgeabv+OBiCAxODAwZzwvYT48L3RkPjx0ZD7mlbDp\r\nh486IDE8L3RkPjx0ZD7vv6UxLDIzNDwvdGQ+PC90cj4KPHRyPjx0ZD48YSBocmVmPSJodHRwczov\r\nL3d3dy5hbWF6b24uY28uanAvZ3AvcHJvZHVjdC9CMDBFWE1QTDAyL3JlZj14eXoiPuOCqOODquOC\r\nqOODvOODqyDjg4bjgqPjg4Pjgrfjg6Xjg5rjg7zjg5Hjg7wgMTgw57WEw5c1566xPC9hPjwvdGQ+\r\nPHRkPuaVsOmHjzogMjwvdGQ+PHRkPu+/pTQ5ODwvdGQ+PC90cj4KPC90YWJsZT4KPHA+5rOo5paH\r\n5ZCI6KiIOiDvv6UyLDIzMDwvcD4KPC9ib2R5PjwvaHRtbD4=\r\n------=_Part_12345--\r\n\r\nFrom order@rakuten.co.jp Mon Jun 15 21:30:20 2026\r\nFrom: =?ISO-2022-JP?B?GyRCM1pFNztUPmwbKEI=?= <order@rakuten.co.jp>\r\nTo: hata@example.com\r\nSubject: =?ISO-2022-JP?B?GyRCIVozWkU3O1Q+bCFbQ21KOEZiTUYkNDNORychSjwrRjBHWz8uJWEhPCVrIUsbKEI=?=\r\nDate: Mon, 15 Jun 2026 21:30:20 +0900\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=ISO-2022-JP\r\nContent-Transfer-Encoding: base64\r\n\r\nGyRCJE8kP01NGyhCCgobJEIkMyROJD8kUyRPM1pFNztUPmwkRyROJDRDbUo4JCIkaiQsJEgkJiQ0\r\nJDYkJCReJDkhIxsoQgoKWxskQjx1Q21IVjlmGyhCXSAxMjM0NTYtMjAyNjA2MTUtMDAxMjM0NTY3\r\nOApbGyRCQ21KOEZ8O34bKEJdIDIwMjYtMDYtMTUgMjE6MzA6MTIKChskQiIjPiZJSj5wSnMbKEIK\r\nGyRCPiZJSkw+ISclKCVqJSghPCVrGyhCIBskQiVIJSQlbCVDJUglWiE8JVEhPBsoQiAxMhskQiVt\r\nITwlaxsoQiAzGyRCR1w0LCQtGyhCChskQkMxMkEhJxsoQjEsNDgwGyRCMV8bKEIKGyRCOEQ/dCEn\r\nGyhCMgobJEI+JklKGyhCVVJMGyRCIScbKEJodHRwczovL2l0ZW0ucmFrdXRlbi5jby5qcC9zYW1w\r\nbGVzaG9wL2VsbGVhaXItMTJyLwoKGyRCPiZJSkw+ISclLSVlJS0lZSVDJUgbKEIgGyRCPyk0b01R\r\nQHY6XhsoQiAbJEI1TSRhQlgkKBsoQiA3NzBtbAobJEJDMTJBIScbKEIzMjgbJEIxXxsoQgobJEI4\r\nRD90IScbKEIzChskQj4mSUobKEJVUkwbJEIhJxsoQmh0dHBzOi8vaXRlbS5yYWt1dGVuLmNvLmpw\r\nL3NhbXBsZXNob3Ava3l1a3l1dHRvLTc3MC8KChskQj4uN1cbKEIgMyw5NDQbJEIxXxsoQgo=\r\n"};
+
+const APP_VERSION = 2;
+const LS_KEY = 'nichiyostock_v1';
+const DEFAULT_CATS = ['紙類', '洗剤・掃除', 'キッチン', 'バス・トイレ', '衛生用品', '食品・飲料', 'その他'];
+const DEFAULT_GMAIL_QUERY = 'from:(auto-confirm@amazon.co.jp OR order@rakuten.co.jp OR shopping-order-master@mail.yahoo.co.jp) (注文 OR ご注文)';
+const SITE_LABEL = { amazon: 'Amazon', rakuten: '楽天', yahoo: 'Yahoo!' };
+const SITE_BADGE = { amazon: 'A', rakuten: 'R', yahoo: 'Y!' };
+const LEVEL_LABEL = ['切れた', 'そろそろ', '十分'];
+
+// ---------- 状態 ----------
+let state = null;
+let pending = [];        // 取込確認待ち注文
+let currentTab = 'stock';
+let filterNeeds = false;
+
+function blankState() {
+  return { version: APP_VERSION, items: [], orders: [], seen: {},
+    categories: DEFAULT_CATS.slice(),
+    settings: { gmailClientId: '', gmailQuery: DEFAULT_GMAIL_QUERY, syncMonths: 12, lastSyncAt: '', rakutenAppId: '' } };
+}
+function migrate(s) {
+  const b = blankState();
+  if (!s || typeof s !== 'object') return b;
+  s.version = APP_VERSION;
+  s.items = Array.isArray(s.items) ? s.items : [];
+  s.orders = Array.isArray(s.orders) ? s.orders : [];
+  s.seen = s.seen || {};
+  s.categories = (Array.isArray(s.categories) && s.categories.length) ? s.categories : b.categories;
+  s.settings = Object.assign(b.settings, s.settings || {});
+  s.items.forEach(function(it) {
+    if (typeof it.level !== 'number') it.level = 2;
+    if (typeof it.stock !== 'number') it.stock = 0;
+    if (typeof it.reorderPoint !== 'number') it.reorderPoint = 1;
+    it.unit = it.unit || '個';
+    it.sites = it.sites || {};
+    it.market = it.market || {};
+    it.category = it.category || 'その他';
+  });
+  return s;
+}
+function load() {
+  try { state = migrate(JSON.parse(localStorage.getItem(LS_KEY))); }
+  catch (e) { state = blankState(); }
+}
+function save() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(state)); }
+  catch (e) { toast('保存に失敗しました: ' + e.message); }
+}
+
+// ---------- 汎用 ----------
+function uid(p) { return (p || 'x') + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
+  return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+function fmtYen(n) { return (n == null || isNaN(n)) ? '—' : '¥' + Number(n).toLocaleString('ja-JP'); }
+function fmtDate(d) {
+  if (!d) return '—';
+  const t = (d instanceof Date) ? d : new Date(d);
+  if (isNaN(t)) return '—';
+  return (t.getFullYear() !== new Date().getFullYear() ? t.getFullYear() + '/' : '') + (t.getMonth() + 1) + '/' + t.getDate();
+}
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  clearTimeout(toast._t); toast._t = setTimeout(function() { el.classList.remove('show'); }, 2600);
+}
+function normalize(s) {
+  return String(s || '').normalize('NFKC').toLowerCase().replace(/[\s　・･、。「」【】（）()\[\]\/／×xX*＊\-ー〜~]+/g, '');
+}
+function bigrams(s) { const r = []; for (let i = 0; i < s.length - 1; i++) r.push(s.substr(i, 2)); return r; }
+function sim(a, b) {
+  const A = bigrams(normalize(a)), B = bigrams(normalize(b));
+  if (!A.length || !B.length) return 0;
+  const m = {}; A.forEach(function(g) { m[g] = (m[g] || 0) + 1; });
+  let hit = 0; B.forEach(function(g) { if (m[g] > 0) { m[g]--; hit++; } });
+  const dice = 2 * hit / (A.length + B.length);
+  // 短い品目名が長い商品名に含まれるケースを拾う（包含率）
+  const contain = hit / Math.min(A.length, B.length);
+  return Math.max(dice, contain * 0.9);
+}
+function seenKey(site, orderId, name) { return site + '|' + (orderId || '?') + '|' + normalize(name).slice(0, 40); }
+
+// ---------- MIMEパーサ ----------
+function b64ToBytes(s) {
+  s = String(s).replace(/[^A-Za-z0-9+/=]/g, '');
+  try { const bin = atob(s); const u = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u;
+  } catch (e) { return new Uint8Array(0); }
+}
+function qpToBytes(s) {
+  s = String(s).replace(/=\r?\n/g, '');
+  const out = [];
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === '=' && /^[0-9A-Fa-f]{2}$/.test(s.substr(i + 1, 2))) {
+      out.push(parseInt(s.substr(i + 1, 2), 16)); i += 2;
+    } else out.push(s.charCodeAt(i) & 0xff);
+  }
+  return new Uint8Array(out);
+}
+function strToBytes(s) {
+  const u = new Uint8Array(s.length);
+  for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i) & 0xff;
+  return u;
+}
+function decodeBytes(bytes, charset) {
+  let cs = String(charset || 'utf-8').toLowerCase().replace(/["']/g, '');
+  try { return new TextDecoder(cs).decode(bytes); }
+  catch (e) { try { return new TextDecoder('utf-8').decode(bytes); } catch (e2) { return ''; } }
+}
+function decodeMimeWords(s) {
+  if (!s) return '';
+  s = s.replace(/(\?=)\s+(=\?)/g, '$1$2');
+  return s.replace(/=\?([^?]+)\?([BQbq])\?([^?]*)\?=/g, function(m, cs, enc, data) {
+    const bytes = enc.toUpperCase() === 'B' ? b64ToBytes(data) : qpToBytes(data.replace(/_/g, ' '));
+    return decodeBytes(bytes, cs);
+  });
+}
+function parseHeaders(block) {
+  const h = {};
+  const lines = block.split(/\r?\n/);
+  let cur = '';
+  function flush() {
+    if (!cur) return;
+    const m = cur.match(/^([\w-]+):\s*([\s\S]*)$/);
+    if (m) h[m[1].toLowerCase()] = m[2];
+    cur = '';
+  }
+  lines.forEach(function(ln) {
+    if (/^[ \t]/.test(ln)) cur += ' ' + ln.trim();
+    else { flush(); cur = ln; }
+  });
+  flush();
+  return h;
+}
+function ctParam(ct, name) {
+  const m = String(ct || '').match(new RegExp(name + '\\s*=\\s*"?([^";]+)"?', 'i'));
+  return m ? m[1].trim() : '';
+}
+function decodePart(body, cte, charset) {
+  // 既にUnicode化済みのテキスト（コピペ等）はそのまま返す
+  if (/[^\u0000-\u00ff]/.test(body)) return body;
+  const c = String(cte || '').toLowerCase();
+  let bytes;
+  if (c === 'base64') bytes = b64ToBytes(body);
+  else if (c === 'quoted-printable') bytes = qpToBytes(body);
+  else bytes = strToBytes(body);
+  return decodeBytes(bytes, charset);
+}
+function parseEntity(raw, out) {
+  const m = raw.match(/^([\s\S]*?)\r?\n\r?\n([\s\S]*)$/);
+  const headers = parseHeaders(m ? m[1] : raw);
+  const body = m ? m[2] : '';
+  const ct = headers['content-type'] || 'text/plain';
+  const boundary = ctParam(ct, 'boundary');
+  if (/multipart\//i.test(ct) && boundary) {
+    const parts = body.split('--' + boundary);
+    for (let i = 1; i < parts.length; i++) {
+      const p = parts[i];
+      if (/^--/.test(p)) break;
+      parseEntity(p.replace(/^\r?\n/, ''), out);
+    }
+  } else {
+    const text = decodePart(body, headers['content-transfer-encoding'], ctParam(ct, 'charset'));
+    if (/text\/html/i.test(ct)) { if (!out.html) out.html = text; }
+    else { if (!out.text) out.text = text; else out.text += '\n' + text; }
+  }
+  return headers;
+}
+function parseMessage(raw) {
+  const out = { text: '', html: '' };
+  const headers = parseEntity(raw, out);
+  return {
+    headers: headers,
+    subject: decodeMimeWords(headers.subject || ''),
+    from: decodeMimeWords(headers.from || ''),
+    date: headers.date ? new Date(headers.date) : null,
+    text: out.text, html: out.html
+  };
+}
+function looksLikeRfc822(s) {
+  return /(^|\r?\n)(From|Subject|Date|Content-Type|MIME-Version):\s/i.test(s.slice(0, 4000));
+}
+function splitMbox(s) {
+  if (!/^From .*@/m.test(s.slice(0, 2000))) return null;
+  const parts = ('\n' + s).split(/\r?\n(?=From [^\s@]+@[^\s]+ )/).map(function(p) {
+    return p.replace(/^From [^\n]*\r?\n/, '').trim();
+  }).filter(function(p) { return p.length > 40; });
+  return parts.length ? parts : null;
+}
+
+// ---------- サイト別抽出 ----------
+function stripTags(html) {
+  return String(html || '')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<scr[i]pt[\s\S]*?<\/scr[i]pt>/gi, ' ')
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<\/(p|div|tr|table|li)>/gi, '\n')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/gi, ' ').replace(/&amp;/gi, '&').replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>').replace(/&quot;/gi, '"').replace(/&#39;/gi, "'")
+    .replace(/[ \t]+/g, ' ');
+}
+function detectSite(msg) {
+  const head = (msg.from || '') + ' ' + (msg.subject || '');
+  const body = (msg.text || '') + ' ' + (msg.html || '');
+  function probe(s) {
+    if (/amazon\.co\.jp/i.test(s)) return 'amazon';
+    if (/rakuten/i.test(s)) return 'rakuten';
+    if (/yahoo/i.test(s)) return 'yahoo';
+    return '';
+  }
+  return probe(head) || probe(body) || 'other';
+}
+function pickPrice(seg) {
+  let m = seg.match(/[￥¥]\s?([0-9][0-9,]*)/);
+  if (!m) m = seg.match(/(?:単価|価格|金額)[：:]?\s*([0-9][0-9,]*)\s*円/);
+  if (!m) m = seg.match(/([0-9][0-9,]*)\s*円/);
+  return m ? parseInt(m[1].replace(/,/g, ''), 10) : null;
+}
+function pickQty(seg) {
+  const m = seg.match(/(?:数量|個数)[：:]?\s*([0-9]+)/);
+  return m ? parseInt(m[1], 10) : 1;
+}
+function dateFromBody(text) {
+  const m = String(text).match(/(20\d\d)[年\/\-](\d{1,2})[月\/\-](\d{1,2})/);
+  return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null;
+}
+function extractAmazon(msg, flatText, order) {
+  const src = (msg.html || '') + '\n' + flatText;
+  const idm = src.match(/(\d{3}-\d{7}-\d{7})/);
+  if (idm) order.orderId = idm[1];
+  const seenAsin = {};
+  const re = /<a\b[^>]*href="([^"]*\/(?:dp|gp\/product)\/([A-Z0-9]{10})(?![A-Z0-9])[^"]*)"[^>]*>([\s\S]*?)<\/a>/gi;
+  let m;
+  while ((m = re.exec(msg.html || '')) !== null) {
+    const asin = m[2];
+    const name = stripTags(m[3]).replace(/\s+/g, ' ').trim();
+    if (!name || name.length < 3 || /^https?:/.test(name)) continue;
+    if (seenAsin[asin]) continue;
+    seenAsin[asin] = true;
+    const flat = stripTags(msg.html);
+    const idx = flat.indexOf(name.slice(0, 12));
+    const seg = idx >= 0 ? flat.slice(idx + name.length, idx + name.length + 120) : '';
+    order.products.push({ name: name, asin: asin,
+      url: 'https://www.amazon.co.jp/dp/' + asin,
+      price: pickPrice(seg), qty: pickQty(seg) });
+  }
+  if (!order.products.length) {
+    // テキストのみのメール: 行パターンで推定（商品名行の後に 数量/￥ が続く）
+    const lines = flatText.split(/\r?\n/).map(function(l) { return l.trim(); });
+    for (let i = 0; i < lines.length; i++) {
+      if (/^(?:数量|個数)[：:]?\s*\d+/.test(lines[i]) && i > 0 && lines[i - 1].length > 4 &&
+          !/注文|合計|お届け|配送|￥/.test(lines[i - 1])) {
+        const seg = lines.slice(i, i + 3).join(' ');
+        order.products.push({ name: lines[i - 1], asin: '', url: '',
+          price: pickPrice(seg), qty: pickQty(seg) });
+      }
+    }
+  }
+}
+function labeledBlocks(text, order, urlRe, urlHost) {
+  const segs = String(text).split(/商品名[：:]\s*/).slice(1);
+  segs.forEach(function(seg) {
+    const name = seg.split(/\r?\n/)[0].trim();
+    if (!name) return;
+    const win = seg.slice(0, 400);
+    const um = win.match(urlRe);
+    order.products.push({ name: name, asin: '',
+      url: um ? um[0].replace(/[)＞>」\]]+$/, '') : '',
+      price: pickPrice(win), qty: pickQty(win) });
+  });
+  if (!order.products.length) {
+    // ラベル無し形式: 商品URLの直前の非空行を商品名とみなす
+    const lines = String(text).split(/\r?\n/);
+    for (let i = 0; i < lines.length; i++) {
+      const um = lines[i].match(urlRe);
+      if (!um) continue;
+      let name = '';
+      for (let j = i - 1; j >= 0 && j >= i - 4; j--) {
+        const t = lines[j].trim();
+        if (t && !urlRe.test(t) && !/^[\d,¥￥円\s]+$/.test(t)) { name = t; break; }
+      }
+      if (name) {
+        const win = lines.slice(Math.max(0, i - 3), i + 3).join('\n');
+        order.products.push({ name: name.replace(/^商品名[：:]\s*/, ''), asin: '',
+          url: um[0], price: pickPrice(win), qty: pickQty(win) });
+      }
+    }
+  }
+}
+function extractRakuten(msg, flatText, order) {
+  const idm = flatText.match(/(?:受注|注文)番号[\]】〕）)]*[：:]?\s*([0-9][0-9\-]{8,30})/);
+  if (idm) order.orderId = idm[1];
+  labeledBlocks(flatText, order, /https?:\/\/item\.rakuten\.co\.jp\/[^\s"'<>）)」]+/);
+}
+function extractYahoo(msg, flatText, order) {
+  const idm = flatText.match(/注文(?:番号|ID)[：:]\s*([A-Za-z0-9][\w\-]{4,40})/);
+  if (idm) order.orderId = idm[1];
+  labeledBlocks(flatText, order, /https?:\/\/store\.shopping\.yahoo\.co\.jp\/[^\s"'<>）)」]+/);
+}
+function extractGeneric(msg, flatText, order) {
+  labeledBlocks(flatText, order, /https?:\/\/[^\s"'<>）)」]+/);
+}
+function extractOrder(msg) {
+  const site = detectSite(msg);
+  const flatText = ((msg.text || '') + '\n' + stripTags(msg.html || ''));
+  const order = { site: site, orderId: '', subject: msg.subject || '',
+    date: (msg.date && !isNaN(msg.date)) ? msg.date : dateFromBody(flatText), products: [] };
+  if (site === 'amazon') extractAmazon(msg, flatText, order);
+  else if (site === 'rakuten') extractRakuten(msg, flatText, order);
+  else if (site === 'yahoo') extractYahoo(msg, flatText, order);
+  else extractGeneric(msg, flatText, order);
+  order.products = order.products.filter(function(p) { return p.name && p.name.length >= 2; }).slice(0, 30);
+  return order;
+}
+function parseInput(bin) {
+  const msgs = splitMbox(bin) || [bin];
+  const orders = [];
+  msgs.forEach(function(m) {
+    try {
+      const msg = looksLikeRfc822(m) ? parseMessage(m)
+        : { headers: {}, subject: '', from: '', date: null, text: m, html: '' };
+      const o = extractOrder(msg);
+      if (o.products.length || o.site !== 'other') orders.push(o);
+    } catch (e) { /* 1通の失敗で全体を止めない */ }
+  });
+  return orders;
+}
+
+// ---------- 再注文リンク ----------
+function amazonCartUrl(list) {
+  const u = new URL('https://www.amazon.co.jp/gp/aws/cart/add.html');
+  list.forEach(function(x, i) {
+    u.searchParams.set('ASIN.' + (i + 1), x.asin);
+    u.searchParams.set('Quantity.' + (i + 1), String(x.qty || 1));
+  });
+  return u.toString();
+}
+function searchUrl(site, name) {
+  const q = encodeURIComponent(String(name).replace(/\s+/g, ' ').trim());
+  if (site === 'amazon') return 'https://www.amazon.co.jp/s?k=' + q;
+  if (site === 'rakuten') return 'https://search.rakuten.co.jp/search/mall/' + q + '/';
+  return 'https://shopping.yahoo.co.jp/search?p=' + q;
+}
+
+// ---------- 相場チェック（楽天API） ----------
+// 楽天のみ検索APIがCORS対応でブラウザから現在相場を取得できる。
+// Amazon/Yahoo!はブラウザから使える価格APIが無いため、注文履歴の前回購入価格を比較対象にする。
+function sleep(ms) { return new Promise(function(res) { setTimeout(res, ms); }); }
+function marketQuery(it) {
+  const s = it.sites || {};
+  return (s.rakuten && s.rakuten.name) || (s.amazon && s.amazon.name) || (s.yahoo && s.yahoo.name) || it.name;
+}
+function pickRakutenCheapest(q, data) {
+  const items = ((data && data.Items) || []).map(function(x) { return x.Item || x; });
+  let best = null;
+  items.forEach(function(x) {
+    if (!x) return;
+    const price = parseInt(x.itemPrice, 10);
+    if (!isFinite(price) || price <= 0) return;
+    if (sim(q, x.itemName || '') < 0.35) return;   // 無関係な商品（付属品・別商品）を除外
+    if (!best || price < best.price) best = { price: price, name: x.itemName || '', url: x.itemUrl || '', shop: x.shopName || '' };
+  });
+  return best;
+}
+async function fetchRakutenMarket(it) {
+  const appId = (state.settings.rakutenAppId || '').trim();
+  if (!appId) throw new Error('楽天アプリIDが未設定です');
+  const q = marketQuery(it);
+  const u = new URL('https://app.rakuten.co.jp/services/api/IchibaItem/Search/20220601');
+  u.searchParams.set('format', 'json');
+  u.searchParams.set('applicationId', appId);
+  u.searchParams.set('keyword', q);
+  u.searchParams.set('hits', '20');
+  const r = await fetch(u.toString());
+  const data = await r.json();
+  if (data.error) throw new Error(data.error_description || data.error);
+  return pickRakutenCheapest(q, data);
+}
+function bestPriceList(it) {
+  const list = [];
+  if (it.market && it.market.rakuten && it.market.rakuten.price) {
+    const m = it.market.rakuten;
+    list.push({ site: 'rakuten', kind: 'current', price: m.price, url: m.url, name: m.name, shop: m.shop, at: m.at });
+  }
+  ['amazon', 'rakuten', 'yahoo'].forEach(function(s) {
+    const si = it.sites && it.sites[s];
+    if (si && si.lastPrice != null && isFinite(si.lastPrice)) {
+      list.push({ site: s, kind: 'last', price: si.lastPrice, url: si.url || '', at: si.lastDate });
+    }
+  });
+  list.sort(function(a, b) { return a.price - b.price; });
+  return list;
+}
+function priceLine(it) {
+  const l = bestPriceList(it);
+  if (!l.length) return '';
+  if (l.length === 1 && l[0].kind === 'last') return '';  // 前回価格1件だけなら前回チップと重複するので出さない
+  const b = l[0];
+  const when = b.kind === 'current' ? '現在の楽天相場 ' + fmtDate(b.at) : '前回購入 ' + fmtDate(b.at);
+  return '<div class="last">💴 最安 <span class="sitebadge ' + b.site + '">' + SITE_BADGE[b.site] + '</span> <b>' + fmtYen(b.price) + '</b> <span class="muted">（' + when + '）</span></div>';
+}
+function marketStatus(msg) {
+  const el = document.getElementById('marketStatus');
+  if (el) el.textContent = msg;
+}
+async function updateMarketAll() {
+  if (!(state.settings.rakutenAppId || '').trim()) {
+    toast('先に設定タブで楽天アプリIDを登録してください（無料）'); switchTab('settings'); return;
+  }
+  if (updateMarketAll._busy) return;
+  updateMarketAll._busy = true;
+  const items = state.items.slice();
+  let ok = 0, miss = 0, err = 0, lastErr = '';
+  for (let i = 0; i < items.length; i++) {
+    marketStatus('相場確認中 ' + (i + 1) + '/' + items.length + '：' + items[i].name);
+    try {
+      const best = await fetchRakutenMarket(items[i]);
+      if (best) { best.at = new Date().toISOString(); items[i].market = items[i].market || {}; items[i].market.rakuten = best; ok++; }
+      else miss++;
+      save();
+    } catch (e) {
+      err++; lastErr = e.message;
+      if (/アプリID|applicationId|wrong_parameter/i.test(e.message)) break;  // キー不正なら中断
+    }
+    if (i < items.length - 1) await sleep(1100);  // 楽天APIのレート制限(1リクエスト/秒)を守る
+  }
+  updateMarketAll._busy = false;
+  if (currentTab === 'stock') renderStock();
+  toast('相場更新: 取得' + ok + '件・該当なし' + miss + '件' + (err ? '・エラー' + err + '件（' + lastErr + '）' : ''));
+}
+async function checkMarketOne(id) {
+  const it = findItem(id); if (!it) return;
+  if (!(state.settings.rakutenAppId || '').trim()) {
+    closeLayers(); toast('先に設定タブで楽天アプリIDを登録してください（無料）'); switchTab('settings'); return;
+  }
+  toast('楽天の相場を確認中…');
+  try {
+    const best = await fetchRakutenMarket(it);
+    if (best) {
+      best.at = new Date().toISOString();
+      it.market = it.market || {}; it.market.rakuten = best; save();
+      toast('楽天の最安相場: ' + fmtYen(best.price));
+    } else {
+      toast('似た商品が見つかりませんでした（品目名を実際の商品名に近づけると精度が上がります）');
+    }
+    openReorder(id);
+  } catch (e) { toast('相場取得に失敗: ' + e.message); }
+}
+
+// ---------- 品目操作 ----------
+function findItem(id) { return state.items.find(function(i) { return i.id === id; }); }
+function lastOrderOf(itemId) {
+  let best = null;
+  state.orders.forEach(function(o) {
+    if (o.itemId !== itemId) return;
+    if (!best || String(o.date) > String(best.date)) best = o;
+  });
+  return best;
+}
+function needsBuy(it) { return it.stock <= it.reorderPoint && it.level <= 1; }
+function isUrgent(it) { return it.stock <= 0 && it.level === 0; }
+function guessCategory(name) {
+  const n = normalize(name);
+  const map = [
+    ['紙類', ['ティッシュ', 'トイレットペーパー', 'キッチンペーパー', 'ペーパータオル']],
+    ['洗剤・掃除', ['洗剤', 'ハイター', 'クリーナー', '除菌', 'カビ', 'マジックリン', '柔軟剤', 'アタック', 'アリエール', 'ジョイ', 'キュキュット', 'ウタマロ', 'ブリーチ']],
+    ['キッチン', ['ラップ', 'ホイル', 'ジップ', 'スポンジ', 'ごみ袋', 'ゴミ袋', '保存袋', 'クッキングシート']],
+    ['バス・トイレ', ['シャンプー', 'コンディショナー', 'ボディソープ', 'せっけん', '石けん', '入浴', 'ハンドソープ']],
+    ['衛生用品', ['マスク', '歯ブラシ', '歯みがき', '歯磨き', 'フロス', '綿棒', 'ばんそうこう', 'おむつ', 'ウェットティッシュ']],
+    ['食品・飲料', ['水', 'お茶', '麦茶', 'コーヒー', '米', '炭酸']]
+  ];
+  for (let i = 0; i < map.length; i++) {
+    if (map[i][1].some(function(k) { return n.indexOf(normalize(k)) >= 0; })) {
+      if (state.categories.indexOf(map[i][0]) >= 0) return map[i][0];
+    }
+  }
+  return state.categories.indexOf('その他') >= 0 ? 'その他' : state.categories[state.categories.length - 1];
+}
+function bestMatch(name, site) {
+  let best = null, bestScore = 0;
+  state.items.forEach(function(it) {
+    let sc = sim(name, it.name);
+    const si = it.sites && it.sites[site];
+    if (si && si.name) sc = Math.max(sc, sim(name, si.name));
+    if (sc > bestScore) { bestScore = sc; best = it; }
+  });
+  return { item: best, score: bestScore };
+}
+
+// ---------- 画面: タブ ----------
+function switchTab(t) {
+  currentTab = t;
+  ['stock', 'import', 'history', 'settings'].forEach(function(x) {
+    document.getElementById('tab-' + x).classList.toggle('on', x === t);
+  });
+  render();
+}
+function render() {
+  closeLayers();
+  if (currentTab === 'stock') renderStock();
+  else if (currentTab === 'import') renderImport();
+  else if (currentTab === 'history') renderHistory();
+  else renderSettings();
+}
+
+// ---------- 画面: ストック ----------
+function levelBtns(it) {
+  let h = '<div class="lvl">';
+  [2, 1, 0].forEach(function(lv) {
+    const on = it.level === lv ? ' on' + lv : '';
+    h += '<button class="' + on.trim() + '" onclick="setLevel(\'' + it.id + '\',' + lv + ')">' + LEVEL_LABEL[lv] + '</button>';
+  });
+  return h + '</div>';
+}
+function renderStock() {
+  const kw = renderStock._kw || '';
+  const needs = state.items.filter(needsBuy);
+  const amazonBulk = needs.filter(function(it) { return it.sites.amazon && it.sites.amazon.asin; });
+  let h = '<div class="summary-bar">' +
+    '<button class="btn primary" onclick="openEdit(null)">＋ 品目を追加</button>' +
+    '<input type="text" id="kwbox" placeholder="検索" value="' + esc(kw) + '" oninput="kwInput(this.value)" style="flex:1;min-width:120px">' +
+    (needs.length ? '<button class="btn small" style="border-color:var(--warn);color:#9a6b00;background:var(--warn-soft)" onclick="filterNeeds=!filterNeeds;renderStock()">' +
+      (filterNeeds ? '✓ ' : '') + '要買い足し ' + needs.length + '件</button>' : '') +
+    (amazonBulk.length ? '<button class="btn small" style="background:var(--amazon);border-color:var(--amazon);color:#fff" onclick="bulkAmazonCart()">🛒 Amazonまとめてカート(' + amazonBulk.length + ')</button>' : '') +
+    (state.items.length ? '<button class="btn small" onclick="updateMarketAll()">💴 相場を更新</button>' : '') +
+    '</div><div id="marketStatus" class="muted" style="margin:-6px 2px 8px"></div>';
+  if (!state.items.length) {
+    h += '<div class="card"><h2>ようこそ</h2><p>まだ品目がありません。</p><ul class="muted" style="line-height:1.9">' +
+      '<li>「取り込み」タブでGmailの注文メールを読み込むと、買ったものが自動でリストになります</li>' +
+      '<li>「＋ 品目を追加」で手動登録もできます</li></ul></div>';
+  }
+  let shown = 0;
+  state.categories.forEach(function(cat) {
+    let items = state.items.filter(function(it) { return it.category === cat; });
+    if (kw) items = items.filter(function(it) { return normalize(it.name).indexOf(normalize(kw)) >= 0; });
+    if (filterNeeds) items = items.filter(needsBuy);
+    if (!items.length) return;
+    items.sort(function(a, b) { return (needsBuy(b) - needsBuy(a)) || a.name.localeCompare(b.name, 'ja'); });
+    h += '<div class="cat-title">' + esc(cat) + '</div>';
+    items.forEach(function(it) {
+      shown++;
+      const lo = lastOrderOf(it.id);
+      const cls = isUrgent(it) ? ' urgent' : (needsBuy(it) ? ' needs' : '');
+      h += '<div class="item' + cls + '">' +
+        '<div class="info" onclick="openEdit(\'' + it.id + '\')">' +
+        '<div class="name">' + esc(it.name) + (needsBuy(it) ? ' <span class="chip ' + (isUrgent(it) ? 'danger' : 'warn') + '">' + (isUrgent(it) ? '切れてます' : '要買い足し') + '</span>' : '') + '</div>' +
+        '<div class="last">' + (lo ?
+          '<span class="sitebadge ' + lo.site + '">' + SITE_BADGE[lo.site] + '</span> 前回 ' + fmtDate(lo.date) + '・' + fmtYen(lo.price) + (lo.qty > 1 ? '×' + lo.qty : '')
+          : '注文履歴なし') + '</div>' + priceLine(it) + '</div>' +
+        levelBtns(it) +
+        '<div class="stock">' +
+        '<button onclick="bumpStock(\'' + it.id + '\',-1)">−</button>' +
+        '<span class="n">' + it.stock + '<small> ' + esc(it.unit) + '</small></span>' +
+        '<button onclick="bumpStock(\'' + it.id + '\',1)">＋</button></div>' +
+        (it.level === 0 && it.stock > 0 ? '<button class="btn small" onclick="openStock(\'' + it.id + '\')">📦 開封する(−1)</button>' : '') +
+        '<button class="btn small" onclick="openReorder(\'' + it.id + '\')">🛒 再注文</button>' +
+        '</div>';
+    });
+  });
+  if (state.items.length && !shown) h += '<p class="muted">該当する品目がありません。</p>';
+  document.getElementById('main').innerHTML = h;
+}
+function kwInput(v) {
+  renderStock._kw = v; renderStock();
+  const el = document.getElementById('kwbox');
+  if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); }
+}
+function setLevel(id, lv) { const it = findItem(id); if (!it) return; it.level = lv; save(); renderStock(); }
+function bumpStock(id, d) { const it = findItem(id); if (!it) return; it.stock = Math.max(0, it.stock + d); save(); renderStock(); }
+function openStock(id) { const it = findItem(id); if (!it || it.stock < 1) return; it.stock--; it.level = 2; save(); renderStock(); toast('開封: ' + it.name + '（残りストック ' + it.stock + '）'); }
+
+function openReorder(id) {
+  const it = findItem(id); if (!it) return;
+  let h = '<h3>🛒 ' + esc(it.name) + ' を再注文</h3>';
+  ['amazon', 'rakuten', 'yahoo'].forEach(function(site) {
+    const si = it.sites[site];
+    if (!si || !(si.url || si.asin)) return;
+    const url = (site === 'amazon' && si.asin) ? amazonCartUrl([{ asin: si.asin, qty: 1 }]) : si.url;
+    const label = site === 'amazon' && si.asin ? 'Amazonのカートに入れる' : SITE_LABEL[site] + 'の商品ページを開く';
+    h += '<button class="opt" onclick="window.open(\'' + esc(url) + '\',\'_blank\')">' +
+      '<span class="sitebadge ' + site + '">' + SITE_BADGE[site] + '</span><span>' + label +
+      '<div class="muted">' + esc(si.name || '') + (si.lastPrice ? '・前回 ' + fmtYen(si.lastPrice) : '') + '</div></span></button>';
+  });
+  const pl = bestPriceList(it);
+  if (pl.length) {
+    h += '<div class="muted" style="margin:10px 0 6px">💴 価格の比較（楽天=現在の相場 / 他=前回の購入価格）:</div>';
+    pl.forEach(function(p, i) {
+      const lbl = p.kind === 'current'
+        ? '現在の楽天最安 ' + fmtDate(p.at) + (p.shop ? '・' + esc(p.shop) : '') + (p.name ? '<br>' + esc(String(p.name).slice(0, 60)) : '')
+        : '前回購入 ' + fmtDate(p.at);
+      h += '<button class="opt"' + (p.url ? ' onclick="window.open(\'' + esc(p.url) + '\',\'_blank\')"' : ' disabled') + '>' +
+        '<span class="sitebadge ' + p.site + '">' + SITE_BADGE[p.site] + '</span><span><b>' + fmtYen(p.price) + '</b>' +
+        (i === 0 && pl.length > 1 ? ' <span class="chip">最安</span>' : '') +
+        '<div class="muted">' + lbl + '</div></span></button>';
+    });
+  }
+  h += '<div class="row" style="margin:4px 0 10px"><button class="btn small" onclick="checkMarketOne(\'' + it.id + '\')">💴 楽天の今の相場を調べる</button></div>';
+  h += '<div class="muted" style="margin:10px 0 6px">商品情報が無いサイトは検索で:</div><div class="row">';
+  ['amazon', 'rakuten', 'yahoo'].forEach(function(site) {
+    h += '<button class="btn small" onclick="window.open(\'' + esc(searchUrl(site, it.name)) + '\',\'_blank\')">' + SITE_LABEL[site] + 'で検索</button>';
+  });
+  h += '</div>';
+  showSheet(h);
+}
+function bulkAmazonCart() {
+  const list = state.items.filter(needsBuy)
+    .map(function(it) { return it.sites.amazon; })
+    .filter(function(si) { return si && si.asin; })
+    .map(function(si) { return { asin: si.asin, qty: 1, name: si.name }; });
+  if (!list.length) return;
+  if (!confirm('要買い足しのうちAmazonで買える ' + list.length + ' 件をまとめてカートに入れます:\n\n' +
+    list.map(function(x) { return '・' + x.name; }).join('\n'))) return;
+  window.open(amazonCartUrl(list), '_blank');
+}
+
+// ---------- 画面: 品目編集 ----------
+function openEdit(id) {
+  const it = id ? findItem(id) : null;
+  const cats = state.categories.map(function(c) {
+    return '<option' + (it && it.category === c ? ' selected' : '') + '>' + esc(c) + '</option>';
+  }).join('');
+  function siteRow(site) {
+    const si = (it && it.sites[site]) || {};
+    return '<div class="field"><label>' + SITE_LABEL[site] + ' 商品URL' + (site === 'amazon' ? '（貼るとASINを自動認識）' : '') + '</label>' +
+      '<input type="text" id="e-url-' + site + '" value="' + esc(si.url || '') + '" placeholder="https://..."></div>';
+  }
+  const h = '<div class="modal"><h3>' + (it ? '品目を編集' : '品目を追加') + '</h3>' +
+    '<div class="field"><label>名前</label><input type="text" id="e-name" value="' + esc(it ? it.name : '') + '"></div>' +
+    '<div class="row">' +
+    '<div class="field" style="flex:1"><label>カテゴリ</label><select id="e-cat">' + cats + '</select></div>' +
+    '<div class="field" style="width:90px"><label>ストック数</label><input type="number" id="e-stock" min="0" value="' + (it ? it.stock : 0) + '"></div>' +
+    '<div class="field" style="width:90px"><label>単位</label><input type="text" id="e-unit" value="' + esc(it ? it.unit : '個') + '"></div>' +
+    '<div class="field" style="width:110px"><label>買い足しライン</label><input type="number" id="e-rp" min="0" value="' + (it ? it.reorderPoint : 1) + '"></div>' +
+    '</div>' +
+    '<div class="field"><label>メモ</label><input type="text" id="e-memo" value="' + esc(it ? it.memo || '' : '') + '"></div>' +
+    siteRow('amazon') + siteRow('rakuten') + siteRow('yahoo') +
+    '<div class="row" style="justify-content:flex-end;margin-top:12px">' +
+    (it ? '<button class="btn danger" onclick="deleteItem(\'' + it.id + '\')">削除</button>' : '') +
+    '<button class="btn" onclick="closeLayers()">キャンセル</button>' +
+    '<button class="btn primary" onclick="saveEdit(\'' + (it ? it.id : '') + '\')">保存</button></div></div>';
+  showLayer(h);
+}
+function saveEdit(id) {
+  const name = document.getElementById('e-name').value.trim();
+  if (!name) { toast('名前を入力してください'); return; }
+  let it = id ? findItem(id) : null;
+  if (!it) { it = { id: uid('i'), sites: {}, level: 2 }; state.items.push(it); }
+  it.name = name;
+  it.category = document.getElementById('e-cat').value;
+  it.stock = Math.max(0, parseInt(document.getElementById('e-stock').value, 10) || 0);
+  it.unit = document.getElementById('e-unit').value.trim() || '個';
+  it.reorderPoint = Math.max(0, parseInt(document.getElementById('e-rp').value, 10) || 0);
+  it.memo = document.getElementById('e-memo').value.trim();
+  ['amazon', 'rakuten', 'yahoo'].forEach(function(site) {
+    const url = document.getElementById('e-url-' + site).value.trim();
+    if (url) {
+      it.sites[site] = it.sites[site] || {};
+      it.sites[site].url = url;
+      if (site === 'amazon') {
+        const m = url.match(/\/(?:dp|gp\/product)\/([A-Z0-9]{10})(?![A-Z0-9])/);
+        if (m) it.sites.amazon.asin = m[1];
+      }
+    } else if (it.sites[site] && !it.sites[site].name) {
+      delete it.sites[site];
+    } else if (it.sites[site]) {
+      it.sites[site].url = '';
+    }
+  });
+  save(); closeLayers(); renderStock(); toast('保存しました');
+}
+function deleteItem(id) {
+  const it = findItem(id); if (!it) return;
+  if (!confirm('「' + it.name + '」を削除しますか？（注文履歴も消えます）')) return;
+  state.items = state.items.filter(function(i) { return i.id !== id; });
+  state.orders = state.orders.filter(function(o) { return o.itemId !== id; });
+  save(); closeLayers(); renderStock(); toast('削除しました');
+}
+
+// ---------- 画面: 取り込み ----------
+function renderImport() {
+  let h = '<div class="card"><h2>📧 Gmailから取り込む</h2>' +
+    '<p class="muted">Amazon・楽天市場・Yahoo!ショッピングの注文確認メールを検索して読み込みます（読み取りのみ・メールは変更しません）。</p>' +
+    '<div class="row"><button class="btn primary" onclick="gmailSync()">Gmailから取り込む</button>' +
+    '<span class="muted">' + (state.settings.lastSyncAt ? '前回同期: ' + new Date(state.settings.lastSyncAt).toLocaleString('ja-JP') : '未同期') + '</span></div>' +
+    '<div id="gmailStatus" class="muted" style="margin-top:8px"></div>' +
+    (!state.settings.gmailClientId ? '<p class="muted" style="color:#9a6b00">⚠ 先に「設定」タブでGoogleのClient IDを登録してください（<b>セットアップ手順.md</b> 参照）</p>' : '') +
+    '</div>' +
+    '<div class="card"><h2>📁 メールファイルから取り込む</h2>' +
+    '<div class="drop" id="drop">.eml / .mbox ファイルをここにドラッグ（複数可）<br>' +
+    '<button class="btn" style="margin-top:10px" onclick="document.getElementById(\'filePick\').click()">ファイルを選ぶ</button></div>' +
+    '<p class="muted">Gmailでメールを開く → 右上「︙」→「メッセージをダウンロード」で .eml が保存できます。Google Takeout の .mbox も一括で読めます。</p></div>' +
+    '<div class="card"><h2>📋 メール本文の貼り付け</h2>' +
+    '<textarea id="pasteBox" rows="5" placeholder="注文確認メールの本文をそのまま貼り付け"></textarea>' +
+    '<div class="row" style="margin-top:8px"><button class="btn" onclick="parsePaste()">解析する</button>' +
+    (typeof SAMPLES !== 'undefined' && SAMPLES ? '<button class="btn small" onclick="parseSamples()">動作テスト用サンプルを解析</button>' : '') +
+    '</div></div>' +
+    '<div id="pendingArea">' + renderPendingHtml() + '</div>';
+  document.getElementById('main').innerHTML = h;
+  const drop = document.getElementById('drop');
+  ['dragover', 'dragleave', 'drop'].forEach(function(ev) {
+    drop.addEventListener(ev, function(e) {
+      e.preventDefault();
+      drop.classList.toggle('over', ev === 'dragover');
+      if (ev === 'drop') readFiles(e.dataTransfer.files);
+    });
+  });
+}
+function renderPendingHtml() {
+  if (!pending.length) return '';
+  let total = 0, dups = 0;
+  pending.forEach(function(o) { o.products.forEach(function(p) { total++; if (p.dup) dups++; }); });
+  let h = '<div class="card" style="border-color:var(--accent)"><h2>取り込み内容の確認（' + pending.length + '通・商品' + total + '件' +
+    (dups ? '・うち取込済み' + dups + '件' : '') + '）</h2>' +
+    '<p class="muted">チェックした商品だけ取り込みます。「登録先」で既存の品目にひも付けるか、新しい品目を作るか選べます。</p>';
+  pending.forEach(function(o, oi) {
+    h += '<div style="margin-bottom:14px"><div class="order-head">' +
+      '<span class="sitebadge ' + (SITE_BADGE[o.site] ? o.site : 'amazon') + '" style="' + (SITE_BADGE[o.site] ? '' : 'background:#888') + '">' + (SITE_BADGE[o.site] || '?') + '</span>' +
+      '<b>' + fmtDate(o.date) + '</b>' +
+      '<span class="muted">' + esc(o.orderId || o.subject || '') + '</span></div>';
+    if (!o.products.length) {
+      h += '<div class="muted">⚠ このメールから商品を検出できませんでした（形式が対応外の可能性）。件名: ' + esc(o.subject || '不明') + '</div>';
+    }
+    o.products.forEach(function(p, pi) {
+      const id = 'p-' + oi + '-' + pi;
+      h += '<div class="prod' + (p.dup ? ' dup' : '') + '">' +
+        '<input type="checkbox" id="' + id + '-c"' + (p.dup ? '' : ' checked') + '>' +
+        '<span class="pname">' + esc(p.name) + (p.dup ? ' <span class="chip">取込済み</span>' : '') + '</span>' +
+        '<label class="muted">数量 <input class="qty" type="number" id="' + id + '-q" min="1" value="' + (p.qty || 1) + '"></label>' +
+        '<label class="muted">価格 <input class="price" type="number" id="' + id + '-p" min="0" value="' + (p.price != null ? p.price : '') + '"></label>' +
+        '<select id="' + id + '-sel">' + assignOptions(p, o.site) + '</select>' +
+        '</div>';
+    });
+    h += '</div>';
+  });
+  h += '<div class="row" style="justify-content:flex-end">' +
+    '<button class="btn" onclick="pending=[];render()">クリア</button>' +
+    '<button class="btn primary" onclick="applyImport()">✅ チェックした商品を取り込む</button></div></div>';
+  return h;
+}
+function assignOptions(p, site) {
+  const m = bestMatch(p.name, site);
+  let h = '';
+  const newSel = !(m.item && m.score >= 0.45);
+  h += '<option value="new"' + (newSel ? ' selected' : '') + '>＋新規品目「' + esc(shortName(p.name)) + '」</option>';
+  const scored = state.items.map(function(it) {
+    let sc = sim(p.name, it.name);
+    const si = it.sites && it.sites[site];
+    if (si && si.name) sc = Math.max(sc, sim(p.name, si.name));
+    return { it: it, sc: sc };
+  }).sort(function(a, b) { return b.sc - a.sc; });
+  scored.forEach(function(x) {
+    const star = x.sc >= 0.45 ? '★ ' : (x.sc >= 0.25 ? '☆ ' : '');
+    h += '<option value="' + x.it.id + '"' + (!newSel && m.item === x.it ? ' selected' : '') + '>' + star + esc(x.it.name) + '</option>';
+  });
+  return h;
+}
+function shortName(name) {
+  // 商品名から容量・詰替等の飾りを落として品目名らしくする（そのままでも編集可能）
+  let n = String(name).replace(/[【\[(（][^】\])）]*[】\])）]/g, ' ')
+    .replace(/(詰め?替え?用?|つめかえ用?|本体|セット|まとめ買い|お徳用|大容量)/g, ' ')
+    .replace(/[0-9,.]+\s*(ml|mL|L|g|kg|個|枚|本|組|ロール|箱|袋|回分|倍)/gi, ' ')
+    .replace(/[×x✕]\s*[0-9]*/g, ' ')
+    .replace(/\s+/g, ' ').trim();
+  return (n.length >= 3 ? n : String(name)).slice(0, 30);
+}
+function readFiles(files) {
+  const list = Array.prototype.slice.call(files || []);
+  if (!list.length) return;
+  let done = 0; const bins = [];
+  list.forEach(function(f) {
+    const r = new FileReader();
+    r.onload = function() {
+      bins.push(new TextDecoder('latin1').decode(r.result));
+      if (++done === list.length) ingest(bins);
+    };
+    r.onerror = function() { if (++done === list.length) ingest(bins); };
+    r.readAsArrayBuffer(f);
+  });
+}
+function parsePaste() {
+  const t = document.getElementById('pasteBox').value;
+  if (!t.trim()) { toast('本文を貼り付けてください'); return; }
+  ingest([t]);
+}
+function parseSamples() {
+  if (typeof SAMPLES === 'undefined' || !SAMPLES) return;
+  ingest([SAMPLES.amazon, SAMPLES.rakuten, SAMPLES.yahoo]);
+}
+function ingest(bins) {
+  let orders = [];
+  bins.forEach(function(b) { orders = orders.concat(parseInput(b)); });
+  if (!orders.length) { toast('注文メールを認識できませんでした'); return; }
+  orders.forEach(function(o) {
+    o.products.forEach(function(p) {
+      p.dup = !!state.seen[seenKey(o.site, o.orderId, p.name)];
+    });
+  });
+  // 同一注文が既にpendingにあれば置き換えない（単純に足す前に重複除去）
+  const key = function(o) { return o.site + '|' + o.orderId + '|' + (o.products[0] ? o.products[0].name : ''); };
+  const have = {}; pending.forEach(function(o) { have[key(o)] = 1; });
+  orders.forEach(function(o) { if (!have[key(o)]) pending.push(o); });
+  pending.sort(function(a, b) { return String(b.date) > String(a.date) ? 1 : -1; });
+  render();
+  const n = orders.reduce(function(s, o) { return s + o.products.length; }, 0);
+  toast(orders.length + '通・商品' + n + '件を解析しました。内容を確認してください');
+  const pa = document.getElementById('pendingArea');
+  if (pa) pa.scrollIntoView({ behavior: 'smooth' });
+}
+function applyImport() {
+  let added = 0, newItems = 0, skipped = 0;
+  pending.forEach(function(o, oi) {
+    o.products.forEach(function(p, pi) {
+      const id = 'p-' + oi + '-' + pi;
+      const cb = document.getElementById(id + '-c');
+      if (!cb || !cb.checked) { skipped++; return; }
+      const qty = Math.max(1, parseInt(document.getElementById(id + '-q').value, 10) || 1);
+      const priceRaw = document.getElementById(id + '-p').value;
+      const price = priceRaw === '' ? null : Math.max(0, parseInt(priceRaw, 10) || 0);
+      const sel = document.getElementById(id + '-sel').value;
+      let it;
+      if (sel === 'new') {
+        it = { id: uid('i'), name: shortName(p.name), category: guessCategory(p.name),
+          level: 2, stock: 0, reorderPoint: 1, unit: '個', memo: '', sites: {} };
+        state.items.push(it); newItems++;
+      } else {
+        it = findItem(sel);
+        if (!it) { skipped++; return; }
+      }
+      const dateIso = (o.date && !isNaN(o.date)) ? new Date(o.date).toISOString() : new Date().toISOString();
+      state.orders.push({ id: uid('o'), itemId: it.id, site: o.site, orderId: o.orderId,
+        date: dateIso, productName: p.name, qty: qty, price: price, url: p.url || '', asin: p.asin || '' });
+      const si = it.sites[o.site] || {};
+      if (!si.lastDate || dateIso > si.lastDate) {
+        si.name = p.name; si.lastPrice = price; si.lastDate = dateIso;
+        if (p.url) si.url = p.url;
+        if (p.asin) si.asin = p.asin;
+      }
+      it.sites[o.site] = si;
+      state.seen[seenKey(o.site, o.orderId, p.name)] = 1;
+      added++;
+    });
+  });
+  pending = [];
+  save(); render();
+  toast('取り込み完了: 注文' + added + '件（新規品目' + newItems + '件）' + (skipped ? '・スキップ' + skipped + '件' : ''));
+}
+
+// ---------- Gmail API ----------
+let gisLoaded = false;
+function loadGis() {
+  return new Promise(function(res, rej) {
+    if (gisLoaded && window.google && google.accounts) { res(); return; }
+    const s = document.createElement('script');
+    s.src = 'https://accounts.google.com/gsi/client';
+    s.onload = function() { gisLoaded = true; res(); };
+    s.onerror = function() { rej(new Error('Googleの認証スクリプトを読み込めませんでした（オフライン？）')); };
+    document.head.appendChild(s);
+  });
+}
+function gmailStatus(msg) {
+  const el = document.getElementById('gmailStatus');
+  if (el) el.textContent = msg;
+}
+function buildGmailQuery() {
+  let q = state.settings.gmailQuery || DEFAULT_GMAIL_QUERY;
+  let after;
+  if (state.settings.lastSyncAt) {
+    after = new Date(new Date(state.settings.lastSyncAt).getTime() - 3 * 86400000); // 3日重ねて取りこぼし防止
+  } else {
+    after = new Date(); after.setMonth(after.getMonth() - (state.settings.syncMonths || 12));
+  }
+  q += ' after:' + after.getFullYear() + '/' + (after.getMonth() + 1) + '/' + after.getDate();
+  return q;
+}
+async function gfetch(url, token) {
+  const r = await fetch(url, { headers: { Authorization: 'Bearer ' + token } });
+  if (!r.ok) {
+    let detail = '';
+    try { detail = (await r.json()).error.message; } catch (e) {}
+    throw new Error('Gmail API エラー ' + r.status + (detail ? ': ' + detail : ''));
+  }
+  return r.json();
+}
+function b64urlToBin(s) {
+  s = s.replace(/-/g, '+').replace(/_/g, '/');
+  while (s.length % 4) s += '=';
+  return atob(s);
+}
+async function gmailSync() {
+  const cid = (state.settings.gmailClientId || '').trim();
+  if (!cid) { toast('先に設定タブでClient IDを登録してください'); switchTab('settings'); return; }
+  try {
+    gmailStatus('Googleにログイン中…');
+    await loadGis();
+    const token = await new Promise(function(res, rej) {
+      const tc = google.accounts.oauth2.initTokenClient({
+        client_id: cid,
+        scope: 'https://www.googleapis.com/auth/gmail.readonly',
+        callback: function(resp) {
+          if (resp && resp.access_token) res(resp.access_token);
+          else rej(new Error((resp && resp.error) || 'ログインがキャンセルされました'));
+        },
+        error_callback: function(e) { rej(new Error(e && e.message || 'ログインがキャンセルされました')); }
+      });
+      tc.requestAccessToken();
+    });
+    const q = buildGmailQuery();
+    gmailStatus('注文メールを検索中…');
+    let ids = [], pageToken = '';
+    do {
+      const u = new URL('https://gmail.googleapis.com/gmail/v1/users/me/messages');
+      u.searchParams.set('q', q);
+      u.searchParams.set('maxResults', '100');
+      if (pageToken) u.searchParams.set('pageToken', pageToken);
+      const r = await gfetch(u.toString(), token);
+      (r.messages || []).forEach(function(m) { ids.push(m.id); });
+      pageToken = r.nextPageToken || '';
+    } while (pageToken && ids.length < 500);
+    if (!ids.length) {
+      gmailStatus('対象期間に注文メールが見つかりませんでした（検索条件は設定タブで変更できます）');
+      state.settings.lastSyncAt = new Date().toISOString(); save(); return;
+    }
+    const bins = [];
+    for (let i = 0; i < ids.length; i += 10) {
+      gmailStatus('メールを取得中… ' + Math.min(i + 10, ids.length) + '/' + ids.length);
+      const chunk = await Promise.all(ids.slice(i, i + 10).map(function(id) {
+        return gfetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/' + id + '?format=raw', token)
+          .then(function(m) { return m.raw ? b64urlToBin(m.raw) : ''; })
+          .catch(function() { return ''; });
+      }));
+      chunk.forEach(function(b) { if (b) bins.push(b); });
+    }
+    gmailStatus('解析中…');
+    state.settings.lastSyncAt = new Date().toISOString(); save();
+    ingest(bins);
+    gmailStatus('完了: ' + bins.length + '通を解析しました');
+  } catch (e) {
+    gmailStatus('⚠ ' + e.message);
+    toast('Gmail取り込みに失敗: ' + e.message);
+  }
+}
+
+// ---------- 画面: 履歴 ----------
+function renderHistory() {
+  const kw = renderHistory._kw || '';
+  let list = state.orders.slice().sort(function(a, b) { return String(b.date).localeCompare(String(a.date)); });
+  if (kw) list = list.filter(function(o) {
+    const it = findItem(o.itemId);
+    return normalize(o.productName + (it ? it.name : '')).indexOf(normalize(kw)) >= 0;
+  });
+  let h = '<div class="summary-bar"><input type="text" id="histkw" placeholder="品名で検索" value="' + esc(kw) + '" oninput="histKwInput(this.value)" style="flex:1"></div>';
+  if (!list.length) {
+    h += '<div class="card"><p class="muted">注文履歴はまだありません。「取り込み」タブからGmailの注文メールを読み込んでください。</p></div>';
+  } else {
+    h += '<div class="card">';
+    list.forEach(function(o) {
+      const it = findItem(o.itemId);
+      h += '<div class="hist"><span class="d">' + fmtDate(o.date) + '</span>' +
+        '<span class="sitebadge ' + o.site + '">' + (SITE_BADGE[o.site] || '?') + '</span>' +
+        '<span style="flex:1;min-width:200px">' + (it ? '<b>' + esc(it.name) + '</b> ' : '') +
+        '<span class="muted">' + esc(o.productName) + '</span></span>' +
+        '<span>' + fmtYen(o.price) + (o.qty > 1 ? ' ×' + o.qty : '') + '</span>' +
+        (o.url ? '<a href="' + esc(o.url) + '" target="_blank" rel="noopener">商品ページ</a>' : '') +
+        '</div>';
+    });
+    h += '<p class="muted" style="margin-top:8px">計 ' + list.length + ' 件</p></div>';
+  }
+  document.getElementById('main').innerHTML = h;
+}
+function histKwInput(v) {
+  renderHistory._kw = v; renderHistory();
+  const el = document.getElementById('histkw');
+  if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); }
+}
+
+// ---------- 画面: 設定 ----------
+function renderSettings() {
+  const s = state.settings;
+  const h = '<div class="card"><h2>📧 Gmail連携</h2>' +
+    '<div class="field"><label>Google OAuth Client ID（セットアップ手順.md の手順で発行）</label>' +
+    '<input type="text" id="s-cid" value="' + esc(s.gmailClientId) + '" placeholder="xxxxx.apps.googleusercontent.com" style="width:100%"></div>' +
+    '<div class="field"><label>検索条件（Gmailの検索構文）</label>' +
+    '<textarea id="s-query" rows="3">' + esc(s.gmailQuery) + '</textarea></div>' +
+    '<div class="row"><div class="field"><label>初回同期の範囲</label><select id="s-months">' +
+    [3, 6, 12, 24].map(function(m) { return '<option value="' + m + '"' + (s.syncMonths === m ? ' selected' : '') + '>過去' + m + 'ヶ月</option>'; }).join('') +
+    '</select></div>' +
+    '<div class="field"><label>同期状態</label><div>' + (s.lastSyncAt ? new Date(s.lastSyncAt).toLocaleString('ja-JP') + ' <button class="btn small" onclick="resetSync()">リセット</button>' : '未同期') + '</div></div></div>' +
+    '<button class="btn primary" onclick="saveSettings()">設定を保存</button></div>' +
+    '<div class="card"><h2>💴 相場チェック（楽天API）</h2>' +
+    '<div class="field"><label>楽天アプリID（webservice.rakuten.co.jp で無料発行 → セットアップ手順.md 参照）</label>' +
+    '<input type="text" id="s-rkid" value="' + esc(s.rakutenAppId || '') + '" placeholder="10桁〜19桁の数字" style="width:100%"></div>' +
+    '<p class="muted">登録すると「💴 相場を更新」で各品目の現在の楽天最安値を自動取得します。Amazon・Yahoo!はブラウザから使える価格APIが存在しないため、注文履歴の前回購入価格との比較になります。</p>' +
+    '<button class="btn primary" onclick="saveSettings()">設定を保存</button></div>' +
+    '<div class="card"><h2>🗂 カテゴリ</h2>' +
+    '<div class="field"><label>カンマ区切りで編集（並び順に表示されます）</label>' +
+    '<textarea id="s-cats" rows="2">' + esc(state.categories.join(', ')) + '</textarea></div>' +
+    '<button class="btn" onclick="saveCats()">カテゴリを保存</button></div>' +
+    '<div class="card"><h2>💾 バックアップ</h2>' +
+    '<div class="row"><button class="btn" onclick="exportBackup()">JSONで書き出し</button>' +
+    '<button class="btn" onclick="document.getElementById(\'bakPick\').click()">JSONから復元</button></div>' +
+    '<p class="muted">品目 ' + state.items.length + ' 件・注文履歴 ' + state.orders.length + ' 件を保存中。ブラウザ内（localStorage）に保存されるため、定期的な書き出しをおすすめします。</p></div>' +
+    '<div class="card"><h2>⚠️ データ管理</h2>' +
+    '<button class="btn danger" onclick="wipeAll()">全データを消去</button>' +
+    '<p class="muted">バージョン ' + APP_VERSION + '・保存キー ' + LS_KEY + '・<a href="?selftest=1">動作セルフテスト</a></p></div>';
+  document.getElementById('main').innerHTML = h;
+}
+function saveSettings() {
+  state.settings.gmailClientId = document.getElementById('s-cid').value.trim();
+  state.settings.gmailQuery = document.getElementById('s-query').value.trim() || DEFAULT_GMAIL_QUERY;
+  state.settings.syncMonths = parseInt(document.getElementById('s-months').value, 10) || 12;
+  state.settings.rakutenAppId = document.getElementById('s-rkid').value.trim();
+  save(); toast('設定を保存しました');
+}
+function resetSync() {
+  state.settings.lastSyncAt = '';
+  save(); renderSettings(); toast('同期状態をリセットしました（次回は初回同期の範囲で検索します）');
+}
+function saveCats() {
+  const cats = document.getElementById('s-cats').value.split(/[,、]/).map(function(c) { return c.trim(); }).filter(Boolean);
+  if (!cats.length) { toast('カテゴリが空です'); return; }
+  state.categories = cats;
+  state.items.forEach(function(it) { if (cats.indexOf(it.category) < 0) it.category = cats[cats.length - 1]; });
+  save(); renderSettings(); toast('カテゴリを保存しました');
+}
+function exportBackup() {
+  const data = { app: 'nichiyostock', version: APP_VERSION, exportedAt: new Date().toISOString(), state: state };
+  const blob = new Blob([JSON.stringify(data, null, 1)], { type: 'application/json' });
+  const a = document.createElement('a');
+  const d = new Date();
+  a.href = URL.createObjectURL(blob);
+  a.download = '日用品ストック_バックアップ_' + d.getFullYear() + ('0' + (d.getMonth() + 1)).slice(-2) + ('0' + d.getDate()).slice(-2) + '.json';
+  a.click();
+  setTimeout(function() { URL.revokeObjectURL(a.href); }, 5000);
+  toast('バックアップを書き出しました');
+}
+function importBackup(file) {
+  const r = new FileReader();
+  r.onload = function() {
+    try {
+      const data = JSON.parse(r.result);
+      if (data.app !== 'nichiyostock' || !data.state) throw new Error('このアプリのバックアップではありません');
+      if (!confirm('現在のデータ（品目' + state.items.length + '件）を、バックアップ（品目' +
+        (data.state.items || []).length + '件・' + (data.exportedAt || '').slice(0, 10) + '書き出し）で置き換えますか？')) return;
+      state = migrate(data.state);
+      save(); render(); toast('復元しました');
+    } catch (e) { toast('復元に失敗: ' + e.message); }
+  };
+  r.readAsText(file);
+}
+function wipeAll() {
+  if (!confirm('全データ（品目・履歴・設定）を消去しますか？')) return;
+  if (!confirm('本当に消去しますか？この操作は元に戻せません。')) return;
+  localStorage.removeItem(LS_KEY);
+  location.reload();
+}
+
+// ---------- レイヤー ----------
+function showLayer(html) {
+  document.getElementById('layer').innerHTML = html;
+  document.getElementById('overlay').classList.add('show');
+}
+function showSheet(html) { showLayer('<div class="sheet">' + html + '</div>'); }
+function closeLayers() {
+  document.getElementById('layer').innerHTML = '';
+  document.getElementById('overlay').classList.remove('show');
+}
+
+// ---------- セルフテスト ----------
+function runSelftest() {
+  const results = [];
+  function t(name, fn) {
+    try { const r = fn(); results.push({ name: name, ok: !!r, detail: r === true ? '' : String(r) }); }
+    catch (e) { results.push({ name: name, ok: false, detail: e.message }); }
+  }
+  t('QPデコード（UTF-8）', function() { return decodeBytes(qpToBytes('=E3=81=82'), 'utf-8') === 'あ'; });
+  t('base64デコード（UTF-8）', function() { return decodeBytes(b64ToBytes('44GT44KT44Gr44Gh44Gv'), 'utf-8') === 'こんにちは'; });
+  if (typeof SAMPLES !== 'undefined' && SAMPLES) {
+    const am = parseMessage(SAMPLES.amazon);
+    const ao = extractOrder(am);
+    t('Amazon: 件名デコード', function() { return am.subject.indexOf('ご注文の確認') >= 0; });
+    t('Amazon: サイト判定', function() { return ao.site === 'amazon'; });
+    t('Amazon: 注文番号', function() { return ao.orderId === '249-1234567-1234567'; });
+    t('Amazon: 商品2件', function() { return ao.products.length === 2; });
+    t('Amazon: ASIN抽出', function() { return ao.products[0].asin === 'B00EXMPL01' && ao.products[1].asin === 'B00EXMPL02'; });
+    t('Amazon: 商品名', function() { return ao.products[0].name.indexOf('アタック') >= 0 && ao.products[1].name.indexOf('エリエール') >= 0; });
+    t('Amazon: 価格', function() { return ao.products[0].price === 1234 && ao.products[1].price === 498; });
+    t('Amazon: 数量', function() { return ao.products[0].qty === 1 && ao.products[1].qty === 2; });
+    t('Amazon: 日付', function() { return ao.date && ao.date.getMonth() === 5 && ao.date.getDate() === 23; });
+    const rm = parseMessage(SAMPLES.rakuten);
+    const ro = extractOrder(rm);
+    t('楽天: ISO-2022-JP件名', function() { return rm.subject.indexOf('楽天市場') >= 0 && rm.subject.indexOf('自動配信') >= 0; });
+    t('楽天: ISO-2022-JP本文', function() { return rm.text.indexOf('トイレットペーパー') >= 0; });
+    t('楽天: サイト判定', function() { return ro.site === 'rakuten'; });
+    t('楽天: 受注番号', function() { return ro.orderId === '123456-20260615-0012345678'; });
+    t('楽天: 商品2件', function() { return ro.products.length === 2; });
+    t('楽天: 商品名', function() { return ro.products[0].name.indexOf('エリエール') >= 0 && ro.products[1].name.indexOf('キュキュット') >= 0; });
+    t('楽天: 単価', function() { return ro.products[0].price === 1480 && ro.products[1].price === 328; });
+    t('楽天: 個数', function() { return ro.products[0].qty === 2 && ro.products[1].qty === 3; });
+    t('楽天: 商品URL', function() { return ro.products[0].url.indexOf('item.rakuten.co.jp/sampleshop/elleair-12r') >= 0; });
+    const ym = parseMessage(SAMPLES.yahoo);
+    const yo = extractOrder(ym);
+    t('Yahoo: サイト判定', function() { return yo.site === 'yahoo'; });
+    t('Yahoo: 注文番号', function() { return yo.orderId === 'sampleshop-10012345'; });
+    t('Yahoo: 商品1件', function() { return yo.products.length === 1; });
+    t('Yahoo: 商品名・価格・数量', function() { return yo.products[0].name.indexOf('泡ハイター') >= 0 && yo.products[0].price === 248 && yo.products[0].qty === 2; });
+    t('Yahoo: 商品URL', function() { return yo.products[0].url.indexOf('store.shopping.yahoo.co.jp') >= 0; });
+    const mb = splitMbox(SAMPLES.mbox);
+    t('mbox: 2通に分割', function() { return mb && mb.length === 2; });
+    t('mbox: 各通の解析', function() {
+      const o1 = extractOrder(parseMessage(mb[0])), o2 = extractOrder(parseMessage(mb[1]));
+      return o1.site === 'amazon' && o1.products.length === 2 && o2.site === 'rakuten' && o2.products.length === 2;
+    });
+    t('parseInput: mbox一括', function() {
+      const os = parseInput(SAMPLES.mbox);
+      return os.length === 2 && os[0].products.length + os[1].products.length === 4;
+    });
+  } else {
+    results.push({ name: 'サンプル埋め込み', ok: false, detail: 'SAMPLES未生成' });
+  }
+  // コピペ（Unicode本文）経路
+  t('コピペ解析: 楽天形式の生テキスト', function() {
+    const txt = '楽天市場でのご注文\n[受注番号] 111111-20260701-0099999999\n商品名：サンプル洗剤 詰め替え\n単価：500円\n個数：2\n商品URL：https://item.rakuten.co.jp/shop/abc/\n';
+    const os = parseInput(txt);
+    return os.length === 1 && os[0].site === 'rakuten' && os[0].products[0].price === 500 && os[0].products[0].qty === 2;
+  });
+  t('類似マッチ: 表記ゆれで一致', function() { return sim('アタック ZERO 洗濯洗剤 詰め替え 1800g', 'アタック洗濯洗剤つめかえ用') > 0.4; });
+  t('類似マッチ: 無関係は低スコア', function() { return sim('トイレットペーパー 12ロール', 'アルカリ乾電池 単3形') < 0.2; });
+  t('AmazonカートURL: 1品', function() {
+    const u = amazonCartUrl([{ asin: 'B00EXAMPLE1', qty: 2 }]);
+    return u.indexOf('ASIN.1=B00EXAMPLE1') >= 0 && u.indexOf('Quantity.1=2') >= 0;
+  });
+  t('AmazonカートURL: 複数まとめ', function() {
+    const u = amazonCartUrl([{ asin: 'A' + '123456789', qty: 1 }, { asin: 'B00EXAMPLE2', qty: 3 }]);
+    return u.indexOf('ASIN.2=B00EXAMPLE2') >= 0 && u.indexOf('Quantity.2=3') >= 0;
+  });
+  t('検索URL生成', function() { return searchUrl('rakuten', 'アタック').indexOf('search.rakuten.co.jp') >= 0; });
+  t('重複キー: 同一注文は同一キー', function() {
+    return seenKey('amazon', '249-1', 'アタック ZERO') === seenKey('amazon', '249-1', 'アタック　ZERO') &&
+      seenKey('amazon', '249-1', 'アタック') !== seenKey('amazon', '249-2', 'アタック');
+  });
+  t('空入力で落ちない', function() { return parseInput('').length === 0; });
+  t('ゴミ入力で落ちない', function() { return Array.isArray(parseInput('%%% ###ただの文字列###')); });
+  t('カテゴリ推定', function() {
+    return guessCategory('エリエール トイレットペーパー') === '紙類' && guessCategory('謎の商品XYZ') === 'その他';
+  });
+  t('品目名の短縮', function() {
+    const s = shortName('【大容量】アタック ZERO 洗濯洗剤 詰め替え 1800g×2袋');
+    return s.indexOf('アタック') >= 0 && s.indexOf('1800') < 0 && s.indexOf('大容量') < 0;
+  });
+  t('状態マイグレーション: 空/壊れたデータ', function() {
+    const a = migrate(null), b = migrate({ items: [{ id: 'x', name: 'テスト' }] });
+    return a.items.length === 0 && b.items[0].level === 2 && b.items[0].sites && b.settings.gmailQuery.length > 0;
+  });
+  t('マイグレーション: v1データ→v2（market/楽天ID追加・既存データ保持）', function() {
+    const s = migrate({ version: 1, items: [{ id: 'x', name: 'テスト', sites: { amazon: { asin: 'B000000000' } } }],
+      orders: [{ id: 'o1', itemId: 'x' }], settings: { gmailClientId: 'abc' } });
+    return s.version === 2 && s.items[0].market && s.items[0].sites.amazon.asin === 'B000000000' &&
+      s.orders.length === 1 && s.settings.gmailClientId === 'abc' && typeof s.settings.rakutenAppId === 'string';
+  });
+  t('楽天相場: 類似候補の最安を選ぶ（文字列価格も可）', function() {
+    const data = { Items: [
+      { Item: { itemName: 'アタック ZERO 洗濯洗剤 詰め替え 1800g', itemPrice: 1180, itemUrl: 'https://item.rakuten.co.jp/a/1/', shopName: 'A店' } },
+      { Item: { itemName: '洗濯機用 防振ゴム 4個セット', itemPrice: 100, itemUrl: 'https://item.rakuten.co.jp/b/2/', shopName: 'B店' } },
+      { Item: { itemName: 'アタック ZERO 洗濯洗剤 詰め替え 1800g 2袋セット', itemPrice: '980', itemUrl: 'https://item.rakuten.co.jp/c/3/', shopName: 'C店' } }
+    ] };
+    const best = pickRakutenCheapest('アタック ZERO 洗濯洗剤 詰め替え 1800g', data);
+    return best && best.price === 980 && best.url.indexOf('/c/3/') >= 0 && best.shop === 'C店';
+  });
+  t('楽天相場: 無関係な商品しか無ければnull', function() {
+    const data = { Items: [{ Item: { itemName: '全然関係ない雑貨', itemPrice: 10, itemUrl: 'u', shopName: 's' } }] };
+    return pickRakutenCheapest('アタック ZERO 洗濯洗剤', data) === null;
+  });
+  t('楽天相場: 空レスポンスで落ちない', function() {
+    return pickRakutenCheapest('テスト', {}) === null && pickRakutenCheapest('テスト', { Items: [] }) === null;
+  });
+  t('最安リスト: 現在相場と前回価格を統合して昇順', function() {
+    const it = { market: { rakuten: { price: 980, url: 'u1', at: '2026-07-07' } },
+      sites: { amazon: { lastPrice: 1234, lastDate: '2026-06-23' }, yahoo: { lastPrice: 248, lastDate: '2026-06-20' } } };
+    const l = bestPriceList(it);
+    return l.length === 3 && l[0].site === 'yahoo' && l[0].price === 248 &&
+      l[1].price === 980 && l[1].kind === 'current' && l[2].price === 1234;
+  });
+  t('最安表示: 前回価格1件のみなら行を出さない', function() {
+    const one = { market: {}, sites: { amazon: { lastPrice: 500, lastDate: '2026-06-01' } } };
+    const two = { market: { rakuten: { price: 400, url: 'u', at: '2026-07-07' } }, sites: {} };
+    return priceLine(one) === '' && priceLine(two).indexOf('¥400') >= 0;
+  });
+  t('相場クエリ: 購入時の商品名を優先', function() {
+    const a = marketQuery({ name: '洗剤', sites: { rakuten: { name: 'キュキュット 食器用洗剤 詰め替え 770ml' } } });
+    const b = marketQuery({ name: '洗剤', sites: {} });
+    return a.indexOf('キュキュット') >= 0 && b === '洗剤';
+  });
+  const okN = results.filter(function(r) { return r.ok; }).length;
+  let h = '<div class="card"><h2>セルフテスト結果: ' + okN + ' / ' + results.length + ' 合格</h2><table class="st-table">';
+  results.forEach(function(r) {
+    h += '<tr><td class="' + (r.ok ? 'ok' : 'ng') + '">' + (r.ok ? '✔' : '✘') + '</td><td>' + esc(r.name) + '</td><td class="muted">' + esc(r.detail) + '</td></tr>';
+  });
+  h += '</table><p><a href="./">← アプリに戻る</a></p></div>';
+  document.getElementById('main').innerHTML = h;
+  document.title = 'selftest ' + okN + '/' + results.length;
+}
+
+// ---------- 起動 ----------
+document.getElementById('filePick').addEventListener('change', function(e) { readFiles(e.target.files); e.target.value = ''; });
+document.getElementById('bakPick').addEventListener('change', function(e) { if (e.target.files[0]) importBackup(e.target.files[0]); e.target.value = ''; });
+load();
+document.getElementById('verLabel').textContent = 'v' + APP_VERSION;
+if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(function() {});
+if (/[?&]selftest=1/.test(location.search)) {
+  document.querySelector('nav').style.display = 'none';
+  runSelftest();
+} else {
+  switchTab('stock');
+}
+</script>
+</body>
+</html>

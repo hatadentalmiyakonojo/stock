@@ -142,7 +142,7 @@
 'use strict';
 const SAMPLES = {"amazon": "From: \"Amazon.co.jp\" <auto-confirm@amazon.co.jp>\r\nTo: hata@example.com\r\nSubject: =?UTF-8?B?QW1hem9uLmNvLmpwIOOBlOazqOaWh+OBrueiuuiqjQ==?=\r\nDate: Tue, 23 Jun 2026 10:15:00 +0900\r\nMIME-Version: 1.0\r\nContent-Type: multipart/alternative; boundary=\"----=_Part_12345\"\r\n\r\n------=_Part_12345\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n=E3=81=AF=E3=81=9F=E6=A7=98\n\nAmazon.co.jp=E3=82=92=E3=81=94=E5=88=A9=E7=94=A8=E3=81=84=E3=81=9F=E3=81=A0=\n=E3=81=8D=E3=81=82=E3=82=8A=E3=81=8C=E3=81=A8=E3=81=86=E3=81=94=E3=81=96=E3=\n=81=84=E3=81=BE=E3=81=99=E3=80=82\n=E3=81=94=E6=B3=A8=E6=96=87=E3=81=AE=E7=A2=BA=E8=AA=8D=E3=82=92=E3=81=8A=E7=\n=9F=A5=E3=82=89=E3=81=9B=E3=81=84=E3=81=9F=E3=81=97=E3=81=BE=E3=81=99=E3=80=\n=82\n\n=E6=B3=A8=E6=96=87=E7=95=AA=E5=8F=B7: 249-1234567-1234567\n\n=E3=82=A2=E3=82=BF=E3=83=83=E3=82=AF ZERO =E6=B4=97=E6=BF=AF=E6=B4=97=E5=89=\n=A4 =E8=A9=B0=E3=82=81=E6=9B=BF=E3=81=88 1800g\n=E6=95=B0=E9=87=8F: 1\n=EF=BF=A51,234\n\n=E3=82=A8=E3=83=AA=E3=82=A8=E3=83=BC=E3=83=AB =E3=83=86=E3=82=A3=E3=83=83=\n=E3=82=B7=E3=83=A5=E3=83=9A=E3=83=BC=E3=83=91=E3=83=BC 180=E7=B5=84=C3=975=\n=E7=AE=B1\n=E6=95=B0=E9=87=8F: 2\n=EF=BF=A5498\n\n=E6=B3=A8=E6=96=87=E5=90=88=E8=A8=88: =EF=BF=A52,230\n\r\n------=_Part_12345\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\nPGh0bWw+PGJvZHk+CjxwPuOBr+OBn+anmDwvcD4KPHA+QW1hem9uLmNvLmpw44KS44GU5Yip55So\r\n44GE44Gf44Gg44GN44GC44KK44GM44Go44GG44GU44GW44GE44G+44GZ44CC44GU5rOo5paH44Gu\r\n56K66KqN44KS44GK55+l44KJ44Gb44GE44Gf44GX44G+44GZ44CCPC9wPgo8cD7ms6jmlofnlarl\r\nj7c6IDI0OS0xMjM0NTY3LTEyMzQ1Njc8L3A+Cjx0YWJsZT4KPHRyPjx0ZD48YSBocmVmPSJodHRw\r\nczovL3d3dy5hbWF6b24uY28uanAvZHAvQjAwRVhNUEwwMT9yZWZfPXBlXzEyMyI+44Ki44K/44OD\r\n44KvIFpFUk8g5rSX5r+v5rSX5YmkIOipsOOCgeabv+OBiCAxODAwZzwvYT48L3RkPjx0ZD7mlbDp\r\nh486IDE8L3RkPjx0ZD7vv6UxLDIzNDwvdGQ+PC90cj4KPHRyPjx0ZD48YSBocmVmPSJodHRwczov\r\nL3d3dy5hbWF6b24uY28uanAvZ3AvcHJvZHVjdC9CMDBFWE1QTDAyL3JlZj14eXoiPuOCqOODquOC\r\nqOODvOODqyDjg4bjgqPjg4Pjgrfjg6Xjg5rjg7zjg5Hjg7wgMTgw57WEw5c1566xPC9hPjwvdGQ+\r\nPHRkPuaVsOmHjzogMjwvdGQ+PHRkPu+/pTQ5ODwvdGQ+PC90cj4KPC90YWJsZT4KPHA+5rOo5paH\r\n5ZCI6KiIOiDvv6UyLDIzMDwvcD4KPC9ib2R5PjwvaHRtbD4=\r\n------=_Part_12345--\r\n", "rakuten": "From: =?ISO-2022-JP?B?GyRCM1pFNztUPmwbKEI=?= <order@rakuten.co.jp>\r\nTo: hata@example.com\r\nSubject: =?ISO-2022-JP?B?GyRCIVozWkU3O1Q+bCFbQ21KOEZiTUYkNDNORychSjwrRjBHWz8uJWEhPCVrIUsbKEI=?=\r\nDate: Mon, 15 Jun 2026 21:30:20 +0900\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=ISO-2022-JP\r\nContent-Transfer-Encoding: base64\r\n\r\nGyRCJE8kP01NGyhCCgobJEIkMyROJD8kUyRPM1pFNztUPmwkRyROJDRDbUo4JCIkaiQsJEgkJiQ0\r\nJDYkJCReJDkhIxsoQgoKWxskQjx1Q21IVjlmGyhCXSAxMjM0NTYtMjAyNjA2MTUtMDAxMjM0NTY3\r\nOApbGyRCQ21KOEZ8O34bKEJdIDIwMjYtMDYtMTUgMjE6MzA6MTIKChskQiIjPiZJSj5wSnMbKEIK\r\nGyRCPiZJSkw+ISclKCVqJSghPCVrGyhCIBskQiVIJSQlbCVDJUglWiE8JVEhPBsoQiAxMhskQiVt\r\nITwlaxsoQiAzGyRCR1w0LCQtGyhCChskQkMxMkEhJxsoQjEsNDgwGyRCMV8bKEIKGyRCOEQ/dCEn\r\nGyhCMgobJEI+JklKGyhCVVJMGyRCIScbKEJodHRwczovL2l0ZW0ucmFrdXRlbi5jby5qcC9zYW1w\r\nbGVzaG9wL2VsbGVhaXItMTJyLwoKGyRCPiZJSkw+ISclLSVlJS0lZSVDJUgbKEIgGyRCPyk0b01R\r\nQHY6XhsoQiAbJEI1TSRhQlgkKBsoQiA3NzBtbAobJEJDMTJBIScbKEIzMjgbJEIxXxsoQgobJEI4\r\nRD90IScbKEIzChskQj4mSUobKEJVUkwbJEIhJxsoQmh0dHBzOi8vaXRlbS5yYWt1dGVuLmNvLmpw\r\nL3NhbXBsZXNob3Ava3l1a3l1dHRvLTc3MC8KChskQj4uN1cbKEIgMyw5NDQbJEIxXxsoQgo=\r\n", "yahoo": "From: =?UTF-8?B?WWFob28h44K344On44OD44OU44Oz44Kw?= <shopping-order-master@mail.yahoo.co.jp>\r\nTo: hata@example.com\r\nSubject: =?UTF-8?B?WWFob28h44K344On44OD44OU44Oz44Kw44Gn44Gu44GU5rOo5paH44Gu56K66KqN?=\r\nDate: Sat, 20 Jun 2026 14:05:30 +0900\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\n44Gv44Gf5qeYCgrjgZPjga7jgZ/jgbPjga/jgZTms6jmlofjgYTjgZ/jgaDjgY3oqqDjgavjgYLj\r\ngorjgYzjgajjgYbjgZTjgZbjgYTjgb7jgZnjgIIKCuOBlOazqOaWh+eVquWPt++8mnNhbXBsZXNo\r\nb3AtMTAwMTIzNDUK44GU5rOo5paH5pel5pmC77yaMjAyNuW5tDbmnIgyMOaXpSAxNOaZgjA15YiG\r\nCgrilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDi\r\nlIDilIAK5ZWG5ZOB5ZCN77ya44Kt44OD44OB44Oz5rOh44OP44Kk44K/44O8IOODj+ODs+ODh+OC\r\no+OCueODl+ODrOODvCA0MDBtbArmlbDph4/vvJoyCuS+oeagvO+8mjI0OOWGhu+8iOeojui+vO+8\r\niQpodHRwczovL3N0b3JlLnNob3BwaW5nLnlhaG9vLmNvLmpwL3NhbXBsZXNob3AvYXdhaGFpdGVy\r\nLTQwMC5odG1sCuKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU\r\ngOKUgOKUgOKUgOKUgArllYblk4HlkIjoqIjjgIA0OTblhoYK6YCB5paZ44CANTUw5YaGCg==\r\n", "mbox": "From auto-confirm@amazon.co.jp Tue Jun 23 10:15:00 2026\r\nFrom: \"Amazon.co.jp\" <auto-confirm@amazon.co.jp>\r\nTo: hata@example.com\r\nSubject: =?UTF-8?B?QW1hem9uLmNvLmpwIOOBlOazqOaWh+OBrueiuuiqjQ==?=\r\nDate: Tue, 23 Jun 2026 10:15:00 +0900\r\nMIME-Version: 1.0\r\nContent-Type: multipart/alternative; boundary=\"----=_Part_12345\"\r\n\r\n------=_Part_12345\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n=E3=81=AF=E3=81=9F=E6=A7=98\n\nAmazon.co.jp=E3=82=92=E3=81=94=E5=88=A9=E7=94=A8=E3=81=84=E3=81=9F=E3=81=A0=\n=E3=81=8D=E3=81=82=E3=82=8A=E3=81=8C=E3=81=A8=E3=81=86=E3=81=94=E3=81=96=E3=\n=81=84=E3=81=BE=E3=81=99=E3=80=82\n=E3=81=94=E6=B3=A8=E6=96=87=E3=81=AE=E7=A2=BA=E8=AA=8D=E3=82=92=E3=81=8A=E7=\n=9F=A5=E3=82=89=E3=81=9B=E3=81=84=E3=81=9F=E3=81=97=E3=81=BE=E3=81=99=E3=80=\n=82\n\n=E6=B3=A8=E6=96=87=E7=95=AA=E5=8F=B7: 249-1234567-1234567\n\n=E3=82=A2=E3=82=BF=E3=83=83=E3=82=AF ZERO =E6=B4=97=E6=BF=AF=E6=B4=97=E5=89=\n=A4 =E8=A9=B0=E3=82=81=E6=9B=BF=E3=81=88 1800g\n=E6=95=B0=E9=87=8F: 1\n=EF=BF=A51,234\n\n=E3=82=A8=E3=83=AA=E3=82=A8=E3=83=BC=E3=83=AB =E3=83=86=E3=82=A3=E3=83=83=\n=E3=82=B7=E3=83=A5=E3=83=9A=E3=83=BC=E3=83=91=E3=83=BC 180=E7=B5=84=C3=975=\n=E7=AE=B1\n=E6=95=B0=E9=87=8F: 2\n=EF=BF=A5498\n\n=E6=B3=A8=E6=96=87=E5=90=88=E8=A8=88: =EF=BF=A52,230\n\r\n------=_Part_12345\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\nPGh0bWw+PGJvZHk+CjxwPuOBr+OBn+anmDwvcD4KPHA+QW1hem9uLmNvLmpw44KS44GU5Yip55So\r\n44GE44Gf44Gg44GN44GC44KK44GM44Go44GG44GU44GW44GE44G+44GZ44CC44GU5rOo5paH44Gu\r\n56K66KqN44KS44GK55+l44KJ44Gb44GE44Gf44GX44G+44GZ44CCPC9wPgo8cD7ms6jmlofnlarl\r\nj7c6IDI0OS0xMjM0NTY3LTEyMzQ1Njc8L3A+Cjx0YWJsZT4KPHRyPjx0ZD48YSBocmVmPSJodHRw\r\nczovL3d3dy5hbWF6b24uY28uanAvZHAvQjAwRVhNUEwwMT9yZWZfPXBlXzEyMyI+44Ki44K/44OD\r\n44KvIFpFUk8g5rSX5r+v5rSX5YmkIOipsOOCgeabv+OBiCAxODAwZzwvYT48L3RkPjx0ZD7mlbDp\r\nh486IDE8L3RkPjx0ZD7vv6UxLDIzNDwvdGQ+PC90cj4KPHRyPjx0ZD48YSBocmVmPSJodHRwczov\r\nL3d3dy5hbWF6b24uY28uanAvZ3AvcHJvZHVjdC9CMDBFWE1QTDAyL3JlZj14eXoiPuOCqOODquOC\r\nqOODvOODqyDjg4bjgqPjg4Pjgrfjg6Xjg5rjg7zjg5Hjg7wgMTgw57WEw5c1566xPC9hPjwvdGQ+\r\nPHRkPuaVsOmHjzogMjwvdGQ+PHRkPu+/pTQ5ODwvdGQ+PC90cj4KPC90YWJsZT4KPHA+5rOo5paH\r\n5ZCI6KiIOiDvv6UyLDIzMDwvcD4KPC9ib2R5PjwvaHRtbD4=\r\n------=_Part_12345--\r\n\r\nFrom order@rakuten.co.jp Mon Jun 15 21:30:20 2026\r\nFrom: =?ISO-2022-JP?B?GyRCM1pFNztUPmwbKEI=?= <order@rakuten.co.jp>\r\nTo: hata@example.com\r\nSubject: =?ISO-2022-JP?B?GyRCIVozWkU3O1Q+bCFbQ21KOEZiTUYkNDNORychSjwrRjBHWz8uJWEhPCVrIUsbKEI=?=\r\nDate: Mon, 15 Jun 2026 21:30:20 +0900\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=ISO-2022-JP\r\nContent-Transfer-Encoding: base64\r\n\r\nGyRCJE8kP01NGyhCCgobJEIkMyROJD8kUyRPM1pFNztUPmwkRyROJDRDbUo4JCIkaiQsJEgkJiQ0\r\nJDYkJCReJDkhIxsoQgoKWxskQjx1Q21IVjlmGyhCXSAxMjM0NTYtMjAyNjA2MTUtMDAxMjM0NTY3\r\nOApbGyRCQ21KOEZ8O34bKEJdIDIwMjYtMDYtMTUgMjE6MzA6MTIKChskQiIjPiZJSj5wSnMbKEIK\r\nGyRCPiZJSkw+ISclKCVqJSghPCVrGyhCIBskQiVIJSQlbCVDJUglWiE8JVEhPBsoQiAxMhskQiVt\r\nITwlaxsoQiAzGyRCR1w0LCQtGyhCChskQkMxMkEhJxsoQjEsNDgwGyRCMV8bKEIKGyRCOEQ/dCEn\r\nGyhCMgobJEI+JklKGyhCVVJMGyRCIScbKEJodHRwczovL2l0ZW0ucmFrdXRlbi5jby5qcC9zYW1w\r\nbGVzaG9wL2VsbGVhaXItMTJyLwoKGyRCPiZJSkw+ISclLSVlJS0lZSVDJUgbKEIgGyRCPyk0b01R\r\nQHY6XhsoQiAbJEI1TSRhQlgkKBsoQiA3NzBtbAobJEJDMTJBIScbKEIzMjgbJEIxXxsoQgobJEI4\r\nRD90IScbKEIzChskQj4mSUobKEJVUkwbJEIhJxsoQmh0dHBzOi8vaXRlbS5yYWt1dGVuLmNvLmpw\r\nL3NhbXBsZXNob3Ava3l1a3l1dHRvLTc3MC8KChskQj4uN1cbKEIgMyw5NDQbJEIxXxsoQgo=\r\n"};
 
-const APP_VERSION = 2;
+const APP_VERSION = 3;
 const LS_KEY = 'nichiyostock_v1';
 const DEFAULT_CATS = ['紙類', '洗剤・掃除', 'キッチン', 'バス・トイレ', '衛生用品', '食品・飲料', 'その他'];
 const DEFAULT_GMAIL_QUERY = 'from:(auto-confirm@amazon.co.jp OR order@rakuten.co.jp OR shopping-order-master@mail.yahoo.co.jp) (注文 OR ご注文)';
@@ -159,7 +159,7 @@ let filterNeeds = false;
 function blankState() {
   return { version: APP_VERSION, items: [], orders: [], seen: {},
     categories: DEFAULT_CATS.slice(),
-    settings: { gmailClientId: '', gmailQuery: DEFAULT_GMAIL_QUERY, syncMonths: 12, lastSyncAt: '', rakutenAppId: '' } };
+    settings: { gmailClientId: '', gmailQuery: DEFAULT_GMAIL_QUERY, syncMonths: 12, lastSyncAt: '', rakutenAppId: '', accounts: [] } };
 }
 function migrate(s) {
   const b = blankState();
@@ -170,6 +170,7 @@ function migrate(s) {
   s.seen = s.seen || {};
   s.categories = (Array.isArray(s.categories) && s.categories.length) ? s.categories : b.categories;
   s.settings = Object.assign(b.settings, s.settings || {});
+  if (!Array.isArray(s.settings.accounts)) s.settings.accounts = [];
   s.items.forEach(function(it) {
     if (typeof it.level !== 'number') it.level = 2;
     if (typeof it.stock !== 'number') it.stock = 0;
@@ -320,7 +321,11 @@ function parseMessage(raw) {
   };
 }
 function looksLikeRfc822(s) {
-  return /(^|\r?\n)(From|Subject|Date|Content-Type|MIME-Version):\s/i.test(s.slice(0, 4000));
+  // 先頭行が「Header-Name: 値」形式ならメールのソース（Gmail rawはDelivered-To:等で始まる）
+  const head = String(s).slice(0, 200).replace(/^[\s\r\n]+/, '');
+  if (/^[A-Za-z][\w-]*:\s?\S/.test(head)) return true;
+  // 実メールはARC/DKIM等の認証ヘッダが数KB続くことがあるため広めに走査する
+  return /(^|\r?\n)(From|Subject|Date|Content-Type|MIME-Version|Delivered-To|Return-Path|Received):\s/i.test(s.slice(0, 20000));
 }
 function splitMbox(s) {
   if (!/^From .*@/m.test(s.slice(0, 2000))) return null;
@@ -372,11 +377,18 @@ function extractAmazon(msg, flatText, order) {
   const idm = src.match(/(\d{3}-\d{7}-\d{7})/);
   if (idm) order.orderId = idm[1];
   const seenAsin = {};
-  const re = /<a\b[^>]*href="([^"]*\/(?:dp|gp\/product)\/([A-Z0-9]{10})(?![A-Z0-9])[^"]*)"[^>]*>([\s\S]*?)<\/a>/gi;
+  const asinRe = /\/(?:dp|gp\/product)\/([A-Z0-9]{10})(?![A-Z0-9])/;
+  const re = /<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;
   let m;
   while ((m = re.exec(msg.html || '')) !== null) {
-    const asin = m[2];
-    const name = stripTags(m[3]).replace(/\s+/g, ' ').trim();
+    // トラッキング用リダイレクトURL（gp/r.html?U=https%3A%2F%2F...%2Fdp%2F...）にも対応するため
+    // hrefをデコードしてからASINを探す
+    let href = m[1].replace(/&amp;/gi, '&');
+    try { href = decodeURIComponent(href); } catch (e) { /* 不正な%はそのまま */ }
+    const am = href.match(asinRe);
+    if (!am) continue;
+    const asin = am[1];
+    const name = stripTags(m[2]).replace(/\s+/g, ' ').trim();
     if (!name || name.length < 3 || /^https?:/.test(name)) continue;
     if (seenAsin[asin]) continue;
     seenAsin[asin] = true;
@@ -396,6 +408,14 @@ function extractAmazon(msg, flatText, order) {
         const seg = lines.slice(i, i + 3).join(' ');
         order.products.push({ name: lines[i - 1], asin: '', url: '',
           price: pickPrice(seg), qty: pickQty(seg) });
+      }
+    }
+    // 本文中の商品URLからASINを補完（商品1件のときだけ確実にひも付く）
+    if (order.products.length === 1 && !order.products[0].asin) {
+      const um = ((msg.text || '') + ' ' + flatText).match(/https?:\/\/www\.amazon\.co\.jp\/[^\s"'<>]*?(?:dp|gp\/product)\/([A-Z0-9]{10})(?![A-Z0-9])/);
+      if (um) {
+        order.products[0].asin = um[1];
+        order.products[0].url = 'https://www.amazon.co.jp/dp/' + um[1];
       }
     }
   }
@@ -453,6 +473,7 @@ function extractOrder(msg) {
   else if (site === 'yahoo') extractYahoo(msg, flatText, order);
   else extractGeneric(msg, flatText, order);
   order.products = order.products.filter(function(p) { return p.name && p.name.length >= 2; }).slice(0, 30);
+  if (!order.products.length) order.snippet = flatText.replace(/\s+/g, ' ').trim().slice(0, 500);
   return order;
 }
 function parseInput(bin) {
@@ -820,11 +841,22 @@ function deleteItem(id) {
 }
 
 // ---------- 画面: 取り込み ----------
+function connectedAccountsHtml() {
+  const accs = state.settings.accounts || [];
+  if (!accs.length) return '';
+  let h = '<div class="muted" style="margin:10px 0 4px">取り込み済みのアカウント（' + accs.length + '）:</div>';
+  accs.forEach(function(a) {
+    h += '<div class="row" style="gap:8px;margin:3px 0"><span class="sitebadge" style="background:#4285f4">G</span>' +
+      '<span style="flex:1;min-width:140px">' + esc(a.email) + '</span>' +
+      '<span class="muted">' + (a.lastSyncAt ? '最終 ' + new Date(a.lastSyncAt).toLocaleString('ja-JP') : '—') + '</span></div>';
+  });
+  return h;
+}
 function renderImport() {
   let h = '<div class="card"><h2>📧 Gmailから取り込む</h2>' +
-    '<p class="muted">Amazon・楽天市場・Yahoo!ショッピングの注文確認メールを検索して読み込みます（読み取りのみ・メールは変更しません）。</p>' +
-    '<div class="row"><button class="btn primary" onclick="gmailSync()">Gmailから取り込む</button>' +
-    '<span class="muted">' + (state.settings.lastSyncAt ? '前回同期: ' + new Date(state.settings.lastSyncAt).toLocaleString('ja-JP') : '未同期') + '</span></div>' +
+    '<p class="muted">Amazon・楽天市場・Yahoo!ショッピングの注文確認メールを検索して読み込みます（読み取りのみ・メールは変更しません）。ボタンを押すとアカウントを選べます。<b>複数のアカウントから取り込むには、アカウントを切り替えて何回か押してください。</b></p>' +
+    '<div class="row"><button class="btn primary" onclick="gmailSync()">＋ Gmailのアカウントを選んで取り込む</button></div>' +
+    connectedAccountsHtml() +
     '<div id="gmailStatus" class="muted" style="margin-top:8px"></div>' +
     (!state.settings.gmailClientId ? '<p class="muted" style="color:#9a6b00">⚠ 先に「設定」タブでGoogleのClient IDを登録してください（<b>セットアップ手順.md</b> 参照）</p>' : '') +
     '</div>' +
@@ -861,7 +893,8 @@ function renderPendingHtml() {
       '<b>' + fmtDate(o.date) + '</b>' +
       '<span class="muted">' + esc(o.orderId || o.subject || '') + '</span></div>';
     if (!o.products.length) {
-      h += '<div class="muted">⚠ このメールから商品を検出できませんでした（形式が対応外の可能性）。件名: ' + esc(o.subject || '不明') + '</div>';
+      h += '<div class="muted">⚠ このメールから商品を検出できませんでした（形式が対応外の可能性）。件名: ' + esc(o.subject || '不明') +
+        (o.snippet ? '<details style="margin-top:4px"><summary>本文の冒頭を見る（調整用）</summary><div style="white-space:pre-wrap;font-size:11px;border:1px solid var(--line);border-radius:6px;padding:6px;margin-top:4px">' + esc(o.snippet) + '</div></details>' : '') + '</div>';
     }
     o.products.forEach(function(p, pi) {
       const id = 'p-' + oi + '-' + pi;
@@ -1004,16 +1037,20 @@ function gmailStatus(msg) {
   const el = document.getElementById('gmailStatus');
   if (el) el.textContent = msg;
 }
-function buildGmailQuery() {
+function buildGmailQuery(lastSyncAt) {
   let q = state.settings.gmailQuery || DEFAULT_GMAIL_QUERY;
   let after;
-  if (state.settings.lastSyncAt) {
-    after = new Date(new Date(state.settings.lastSyncAt).getTime() - 3 * 86400000); // 3日重ねて取りこぼし防止
+  if (lastSyncAt) {
+    after = new Date(new Date(lastSyncAt).getTime() - 3 * 86400000); // 3日重ねて取りこぼし防止
   } else {
     after = new Date(); after.setMonth(after.getMonth() - (state.settings.syncMonths || 12));
   }
   q += ' after:' + after.getFullYear() + '/' + (after.getMonth() + 1) + '/' + after.getDate();
   return q;
+}
+function findAccount(email) {
+  email = String(email || '').toLowerCase();
+  return (state.settings.accounts || []).find(function(a) { return a.email === email; });
 }
 async function gfetch(url, token) {
   const r = await fetch(url, { headers: { Authorization: 'Bearer ' + token } });
@@ -1033,12 +1070,14 @@ async function gmailSync() {
   const cid = (state.settings.gmailClientId || '').trim();
   if (!cid) { toast('先に設定タブでClient IDを登録してください'); switchTab('settings'); return; }
   try {
-    gmailStatus('Googleにログイン中…');
+    gmailStatus('Googleにログイン中…（アカウントを選んでください）');
     await loadGis();
+    // prompt:'select_account' で毎回アカウント選択画面を出す＝複数アカウントを切り替えて取り込める
     const token = await new Promise(function(res, rej) {
       const tc = google.accounts.oauth2.initTokenClient({
         client_id: cid,
         scope: 'https://www.googleapis.com/auth/gmail.readonly',
+        prompt: 'select_account',
         callback: function(resp) {
           if (resp && resp.access_token) res(resp.access_token);
           else rej(new Error((resp && resp.error) || 'ログインがキャンセルされました'));
@@ -1047,8 +1086,14 @@ async function gmailSync() {
       });
       tc.requestAccessToken();
     });
-    const q = buildGmailQuery();
-    gmailStatus('注文メールを検索中…');
+    // ログインしたアカウントを特定（アカウントごとに取り込み範囲を別管理するため）
+    gmailStatus('アカウントを確認中…');
+    const profile = await gfetch('https://gmail.googleapis.com/gmail/v1/users/me/profile', token);
+    const email = (profile.emailAddress || '').toLowerCase();
+    let acct = findAccount(email);
+    if (!acct) { acct = { email: email, lastSyncAt: '' }; state.settings.accounts.push(acct); }
+    const q = buildGmailQuery(acct.lastSyncAt);
+    gmailStatus(email + ' の注文メールを検索中…');
     let ids = [], pageToken = '';
     do {
       const u = new URL('https://gmail.googleapis.com/gmail/v1/users/me/messages');
@@ -1060,12 +1105,14 @@ async function gmailSync() {
       pageToken = r.nextPageToken || '';
     } while (pageToken && ids.length < 500);
     if (!ids.length) {
-      gmailStatus('対象期間に注文メールが見つかりませんでした（検索条件は設定タブで変更できます）');
-      state.settings.lastSyncAt = new Date().toISOString(); save(); return;
+      acct.lastSyncAt = new Date().toISOString(); save();
+      if (currentTab === 'import') renderImport();
+      gmailStatus(email + '：対象期間に新しい注文メールはありませんでした');
+      return;
     }
     const bins = [];
     for (let i = 0; i < ids.length; i += 10) {
-      gmailStatus('メールを取得中… ' + Math.min(i + 10, ids.length) + '/' + ids.length);
+      gmailStatus(email + ' のメールを取得中… ' + Math.min(i + 10, ids.length) + '/' + ids.length);
       const chunk = await Promise.all(ids.slice(i, i + 10).map(function(id) {
         return gfetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/' + id + '?format=raw', token)
           .then(function(m) { return m.raw ? b64urlToBin(m.raw) : ''; })
@@ -1073,10 +1120,11 @@ async function gmailSync() {
       }));
       chunk.forEach(function(b) { if (b) bins.push(b); });
     }
-    gmailStatus('解析中…');
-    state.settings.lastSyncAt = new Date().toISOString(); save();
+    gmailStatus(email + ' の解析中…');
+    acct.lastSyncAt = new Date().toISOString();
+    state.settings.lastSyncAt = acct.lastSyncAt; save();
     ingest(bins);
-    gmailStatus('完了: ' + bins.length + '通を解析しました');
+    gmailStatus('完了: ' + email + ' から ' + bins.length + '通を解析しました。別のアカウントも取り込むには、もう一度ボタンを押して切り替えてください');
   } catch (e) {
     gmailStatus('⚠ ' + e.message);
     toast('Gmail取り込みに失敗: ' + e.message);
@@ -1127,7 +1175,9 @@ function renderSettings() {
     '<div class="row"><div class="field"><label>初回同期の範囲</label><select id="s-months">' +
     [3, 6, 12, 24].map(function(m) { return '<option value="' + m + '"' + (s.syncMonths === m ? ' selected' : '') + '>過去' + m + 'ヶ月</option>'; }).join('') +
     '</select></div>' +
-    '<div class="field"><label>同期状態</label><div>' + (s.lastSyncAt ? new Date(s.lastSyncAt).toLocaleString('ja-JP') + ' <button class="btn small" onclick="resetSync()">リセット</button>' : '未同期') + '</div></div></div>' +
+    '<div class="field"><label>連携済みアカウント</label><div>' +
+    ((s.accounts && s.accounts.length) ? s.accounts.map(function(a) { return esc(a.email); }).join('、') + ' <button class="btn small" onclick="resetSync()">同期記録をリセット</button>' : '未連携') +
+    '</div></div></div>' +
     '<button class="btn primary" onclick="saveSettings()">設定を保存</button></div>' +
     '<div class="card"><h2>💴 相場チェック（楽天API）</h2>' +
     '<div class="field"><label>楽天アプリID（webservice.rakuten.co.jp で無料発行 → セットアップ手順.md 参照）</label>' +
@@ -1156,7 +1206,8 @@ function saveSettings() {
 }
 function resetSync() {
   state.settings.lastSyncAt = '';
-  save(); renderSettings(); toast('同期状態をリセットしました（次回は初回同期の範囲で検索します）');
+  (state.settings.accounts || []).forEach(function(a) { a.lastSyncAt = ''; });
+  save(); renderSettings(); toast('同期記録をリセットしました（次回は全アカウント、初回同期の範囲で再検索します）');
 }
 function saveCats() {
   const cats = document.getElementById('s-cats').value.split(/[,、]/).map(function(c) { return c.trim(); }).filter(Boolean);
@@ -1297,7 +1348,7 @@ function runSelftest() {
   t('マイグレーション: v1データ→v2（market/楽天ID追加・既存データ保持）', function() {
     const s = migrate({ version: 1, items: [{ id: 'x', name: 'テスト', sites: { amazon: { asin: 'B000000000' } } }],
       orders: [{ id: 'o1', itemId: 'x' }], settings: { gmailClientId: 'abc' } });
-    return s.version === 2 && s.items[0].market && s.items[0].sites.amazon.asin === 'B000000000' &&
+    return s.version === APP_VERSION && s.items[0].market && s.items[0].sites.amazon.asin === 'B000000000' &&
       s.orders.length === 1 && s.settings.gmailClientId === 'abc' && typeof s.settings.rakutenAppId === 'string';
   });
   t('楽天相場: 類似候補の最安を選ぶ（文字列価格も可）', function() {
@@ -1332,6 +1383,47 @@ function runSelftest() {
     const a = marketQuery({ name: '洗剤', sites: { rakuten: { name: 'キュキュット 食器用洗剤 詰め替え 770ml' } } });
     const b = marketQuery({ name: '洗剤', sites: {} });
     return a.indexOf('キュキュット') >= 0 && b === '洗剤';
+  });
+  t('ヘッダ判定: 長い認証ヘッダの実メールも認識', function() {
+    let junk = '';
+    for (let i = 0; i < 60; i++) junk += 'X-Header-' + i + ': ' + new Array(80).join('x') + '\r\n';
+    const raw = 'Delivered-To: a@b.c\r\n' + junk + 'Subject: test\r\nFrom: t@amazon.co.jp\r\n\r\nbody';
+    return looksLikeRfc822(raw) && looksLikeRfc822(junk + 'Subject: x\r\n\r\nbody') &&
+      !looksLikeRfc822('楽天市場でのご注文\nありがとうございます');
+  });
+  t('Amazon: リダイレクトリンクからASIN抽出', function() {
+    const html = '<html><body><p>注文番号: 249-1111111-2222222</p>' +
+      '<a href="https://www.amazon.co.jp/gp/r.html?C=abc&amp;U=https%3A%2F%2Fwww.amazon.co.jp%2Fdp%2FB00EXMPL03%3Fref%3Dx&amp;H=1">テスト商品 シャンプー 詰め替え</a> 数量: 2 ￥980</body></html>';
+    const o = extractOrder({ subject: 'ご注文', from: 'auto-confirm@amazon.co.jp', date: new Date(2026, 6, 1), text: '', html: html });
+    return o.products.length === 1 && o.products[0].asin === 'B00EXMPL03' && o.products[0].qty === 2 && o.products[0].price === 980;
+  });
+  t('Amazon: テキスト形式メール＋本文URLからASIN補完', function() {
+    const txt = 'Amazon.co.jp ご注文の確認\n注文番号: 249-3333333-4444444\n\nボディソープ 詰替 800ml\n数量: 1\n￥698\n\nhttps://www.amazon.co.jp/dp/B00EXMPL04?ref=order\n';
+    const o = extractOrder({ subject: '', from: 'auto-confirm@amazon.co.jp', date: null, text: txt, html: '' });
+    return o.products.length === 1 && o.products[0].name.indexOf('ボディソープ') >= 0 && o.products[0].asin === 'B00EXMPL04';
+  });
+  t('検出0件のメールは本文冒頭を保持（調整用表示）', function() {
+    const o = extractOrder({ subject: 'x', from: 'auto-confirm@amazon.co.jp', date: null, text: '特殊な形式のメール本文です。商品リストなし。', html: '' });
+    return o.products.length === 0 && o.snippet && o.snippet.indexOf('特殊な形式') >= 0;
+  });
+  t('複数アカウント: 検索クエリはアカウント別のlastSyncAtで作る', function() {
+    const full = buildGmailQuery('');           // 初回=過去syncMonthsヶ月
+    const inc = buildGmailQuery('2026-06-01T00:00:00.000Z');  // 増分=lastSyncAtの3日前から
+    const d = new Date(new Date('2026-06-01T00:00:00.000Z').getTime() - 3 * 86400000);
+    const expect = 'after:' + d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
+    return /after:\d{4}\/\d{1,2}\/\d{1,2}/.test(full) && inc.indexOf(expect) >= 0 && full !== inc;
+  });
+  t('複数アカウント: マイグレーションでaccounts配列を用意', function() {
+    const a = migrate({ version: 2, settings: { gmailClientId: 'x' } });  // 旧データにaccountsなし
+    const b = migrate({ version: 3, settings: { accounts: [{ email: 'a@b.c', lastSyncAt: '2026-07-01' }] } });
+    return Array.isArray(a.settings.accounts) && a.settings.accounts.length === 0 &&
+      b.settings.accounts.length === 1 && b.settings.accounts[0].email === 'a@b.c';
+  });
+  t('複数アカウント: findAccountは大文字小文字を無視', function() {
+    state.settings.accounts = [{ email: 'hata@example.com', lastSyncAt: '2026-07-01' }];
+    const hit = findAccount('HATA@Example.com'), miss = findAccount('other@example.com');
+    state.settings.accounts = [];
+    return hit && hit.lastSyncAt === '2026-07-01' && !miss;
   });
   const okN = results.filter(function(r) { return r.ok; }).length;
   let h = '<div class="card"><h2>セルフテスト結果: ' + okN + ' / ' + results.length + ' 合格</h2><table class="st-table">';

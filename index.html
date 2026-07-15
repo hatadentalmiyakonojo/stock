@@ -142,7 +142,7 @@
 'use strict';
 const SAMPLES = {"amazon": "From: \"Amazon.co.jp\" <auto-confirm@amazon.co.jp>\r\nTo: hata@example.com\r\nSubject: =?UTF-8?B?QW1hem9uLmNvLmpwIOOBlOazqOaWh+OBrueiuuiqjQ==?=\r\nDate: Tue, 23 Jun 2026 10:15:00 +0900\r\nMIME-Version: 1.0\r\nContent-Type: multipart/alternative; boundary=\"----=_Part_12345\"\r\n\r\n------=_Part_12345\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n=E3=81=AF=E3=81=9F=E6=A7=98\n\nAmazon.co.jp=E3=82=92=E3=81=94=E5=88=A9=E7=94=A8=E3=81=84=E3=81=9F=E3=81=A0=\n=E3=81=8D=E3=81=82=E3=82=8A=E3=81=8C=E3=81=A8=E3=81=86=E3=81=94=E3=81=96=E3=\n=81=84=E3=81=BE=E3=81=99=E3=80=82\n=E3=81=94=E6=B3=A8=E6=96=87=E3=81=AE=E7=A2=BA=E8=AA=8D=E3=82=92=E3=81=8A=E7=\n=9F=A5=E3=82=89=E3=81=9B=E3=81=84=E3=81=9F=E3=81=97=E3=81=BE=E3=81=99=E3=80=\n=82\n\n=E6=B3=A8=E6=96=87=E7=95=AA=E5=8F=B7: 249-1234567-1234567\n\n=E3=82=A2=E3=82=BF=E3=83=83=E3=82=AF ZERO =E6=B4=97=E6=BF=AF=E6=B4=97=E5=89=\n=A4 =E8=A9=B0=E3=82=81=E6=9B=BF=E3=81=88 1800g\n=E6=95=B0=E9=87=8F: 1\n=EF=BF=A51,234\n\n=E3=82=A8=E3=83=AA=E3=82=A8=E3=83=BC=E3=83=AB =E3=83=86=E3=82=A3=E3=83=83=\n=E3=82=B7=E3=83=A5=E3=83=9A=E3=83=BC=E3=83=91=E3=83=BC 180=E7=B5=84=C3=975=\n=E7=AE=B1\n=E6=95=B0=E9=87=8F: 2\n=EF=BF=A5498\n\n=E6=B3=A8=E6=96=87=E5=90=88=E8=A8=88: =EF=BF=A52,230\n\r\n------=_Part_12345\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\nPGh0bWw+PGJvZHk+CjxwPuOBr+OBn+anmDwvcD4KPHA+QW1hem9uLmNvLmpw44KS44GU5Yip55So\r\n44GE44Gf44Gg44GN44GC44KK44GM44Go44GG44GU44GW44GE44G+44GZ44CC44GU5rOo5paH44Gu\r\n56K66KqN44KS44GK55+l44KJ44Gb44GE44Gf44GX44G+44GZ44CCPC9wPgo8cD7ms6jmlofnlarl\r\nj7c6IDI0OS0xMjM0NTY3LTEyMzQ1Njc8L3A+Cjx0YWJsZT4KPHRyPjx0ZD48YSBocmVmPSJodHRw\r\nczovL3d3dy5hbWF6b24uY28uanAvZHAvQjAwRVhNUEwwMT9yZWZfPXBlXzEyMyI+44Ki44K/44OD\r\n44KvIFpFUk8g5rSX5r+v5rSX5YmkIOipsOOCgeabv+OBiCAxODAwZzwvYT48L3RkPjx0ZD7mlbDp\r\nh486IDE8L3RkPjx0ZD7vv6UxLDIzNDwvdGQ+PC90cj4KPHRyPjx0ZD48YSBocmVmPSJodHRwczov\r\nL3d3dy5hbWF6b24uY28uanAvZ3AvcHJvZHVjdC9CMDBFWE1QTDAyL3JlZj14eXoiPuOCqOODquOC\r\nqOODvOODqyDjg4bjgqPjg4Pjgrfjg6Xjg5rjg7zjg5Hjg7wgMTgw57WEw5c1566xPC9hPjwvdGQ+\r\nPHRkPuaVsOmHjzogMjwvdGQ+PHRkPu+/pTQ5ODwvdGQ+PC90cj4KPC90YWJsZT4KPHA+5rOo5paH\r\n5ZCI6KiIOiDvv6UyLDIzMDwvcD4KPC9ib2R5PjwvaHRtbD4=\r\n------=_Part_12345--\r\n", "rakuten": "From: =?ISO-2022-JP?B?GyRCM1pFNztUPmwbKEI=?= <order@rakuten.co.jp>\r\nTo: hata@example.com\r\nSubject: =?ISO-2022-JP?B?GyRCIVozWkU3O1Q+bCFbQ21KOEZiTUYkNDNORychSjwrRjBHWz8uJWEhPCVrIUsbKEI=?=\r\nDate: Mon, 15 Jun 2026 21:30:20 +0900\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=ISO-2022-JP\r\nContent-Transfer-Encoding: base64\r\n\r\nGyRCJE8kP01NGyhCCgobJEIkMyROJD8kUyRPM1pFNztUPmwkRyROJDRDbUo4JCIkaiQsJEgkJiQ0\r\nJDYkJCReJDkhIxsoQgoKWxskQjx1Q21IVjlmGyhCXSAxMjM0NTYtMjAyNjA2MTUtMDAxMjM0NTY3\r\nOApbGyRCQ21KOEZ8O34bKEJdIDIwMjYtMDYtMTUgMjE6MzA6MTIKChskQiIjPiZJSj5wSnMbKEIK\r\nGyRCPiZJSkw+ISclKCVqJSghPCVrGyhCIBskQiVIJSQlbCVDJUglWiE8JVEhPBsoQiAxMhskQiVt\r\nITwlaxsoQiAzGyRCR1w0LCQtGyhCChskQkMxMkEhJxsoQjEsNDgwGyRCMV8bKEIKGyRCOEQ/dCEn\r\nGyhCMgobJEI+JklKGyhCVVJMGyRCIScbKEJodHRwczovL2l0ZW0ucmFrdXRlbi5jby5qcC9zYW1w\r\nbGVzaG9wL2VsbGVhaXItMTJyLwoKGyRCPiZJSkw+ISclLSVlJS0lZSVDJUgbKEIgGyRCPyk0b01R\r\nQHY6XhsoQiAbJEI1TSRhQlgkKBsoQiA3NzBtbAobJEJDMTJBIScbKEIzMjgbJEIxXxsoQgobJEI4\r\nRD90IScbKEIzChskQj4mSUobKEJVUkwbJEIhJxsoQmh0dHBzOi8vaXRlbS5yYWt1dGVuLmNvLmpw\r\nL3NhbXBsZXNob3Ava3l1a3l1dHRvLTc3MC8KChskQj4uN1cbKEIgMyw5NDQbJEIxXxsoQgo=\r\n", "yahoo": "From: =?UTF-8?B?WWFob28h44K344On44OD44OU44Oz44Kw?= <shopping-order-master@mail.yahoo.co.jp>\r\nTo: hata@example.com\r\nSubject: =?UTF-8?B?WWFob28h44K344On44OD44OU44Oz44Kw44Gn44Gu44GU5rOo5paH44Gu56K66KqN?=\r\nDate: Sat, 20 Jun 2026 14:05:30 +0900\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\n44Gv44Gf5qeYCgrjgZPjga7jgZ/jgbPjga/jgZTms6jmlofjgYTjgZ/jgaDjgY3oqqDjgavjgYLj\r\ngorjgYzjgajjgYbjgZTjgZbjgYTjgb7jgZnjgIIKCuOBlOazqOaWh+eVquWPt++8mnNhbXBsZXNo\r\nb3AtMTAwMTIzNDUK44GU5rOo5paH5pel5pmC77yaMjAyNuW5tDbmnIgyMOaXpSAxNOaZgjA15YiG\r\nCgrilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDi\r\nlIDilIAK5ZWG5ZOB5ZCN77ya44Kt44OD44OB44Oz5rOh44OP44Kk44K/44O8IOODj+ODs+ODh+OC\r\no+OCueODl+ODrOODvCA0MDBtbArmlbDph4/vvJoyCuS+oeagvO+8mjI0OOWGhu+8iOeojui+vO+8\r\niQpodHRwczovL3N0b3JlLnNob3BwaW5nLnlhaG9vLmNvLmpwL3NhbXBsZXNob3AvYXdhaGFpdGVy\r\nLTQwMC5odG1sCuKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU\r\ngOKUgOKUgOKUgOKUgArllYblk4HlkIjoqIjjgIA0OTblhoYK6YCB5paZ44CANTUw5YaGCg==\r\n", "mbox": "From auto-confirm@amazon.co.jp Tue Jun 23 10:15:00 2026\r\nFrom: \"Amazon.co.jp\" <auto-confirm@amazon.co.jp>\r\nTo: hata@example.com\r\nSubject: =?UTF-8?B?QW1hem9uLmNvLmpwIOOBlOazqOaWh+OBrueiuuiqjQ==?=\r\nDate: Tue, 23 Jun 2026 10:15:00 +0900\r\nMIME-Version: 1.0\r\nContent-Type: multipart/alternative; boundary=\"----=_Part_12345\"\r\n\r\n------=_Part_12345\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n=E3=81=AF=E3=81=9F=E6=A7=98\n\nAmazon.co.jp=E3=82=92=E3=81=94=E5=88=A9=E7=94=A8=E3=81=84=E3=81=9F=E3=81=A0=\n=E3=81=8D=E3=81=82=E3=82=8A=E3=81=8C=E3=81=A8=E3=81=86=E3=81=94=E3=81=96=E3=\n=81=84=E3=81=BE=E3=81=99=E3=80=82\n=E3=81=94=E6=B3=A8=E6=96=87=E3=81=AE=E7=A2=BA=E8=AA=8D=E3=82=92=E3=81=8A=E7=\n=9F=A5=E3=82=89=E3=81=9B=E3=81=84=E3=81=9F=E3=81=97=E3=81=BE=E3=81=99=E3=80=\n=82\n\n=E6=B3=A8=E6=96=87=E7=95=AA=E5=8F=B7: 249-1234567-1234567\n\n=E3=82=A2=E3=82=BF=E3=83=83=E3=82=AF ZERO =E6=B4=97=E6=BF=AF=E6=B4=97=E5=89=\n=A4 =E8=A9=B0=E3=82=81=E6=9B=BF=E3=81=88 1800g\n=E6=95=B0=E9=87=8F: 1\n=EF=BF=A51,234\n\n=E3=82=A8=E3=83=AA=E3=82=A8=E3=83=BC=E3=83=AB =E3=83=86=E3=82=A3=E3=83=83=\n=E3=82=B7=E3=83=A5=E3=83=9A=E3=83=BC=E3=83=91=E3=83=BC 180=E7=B5=84=C3=975=\n=E7=AE=B1\n=E6=95=B0=E9=87=8F: 2\n=EF=BF=A5498\n\n=E6=B3=A8=E6=96=87=E5=90=88=E8=A8=88: =EF=BF=A52,230\n\r\n------=_Part_12345\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\nPGh0bWw+PGJvZHk+CjxwPuOBr+OBn+anmDwvcD4KPHA+QW1hem9uLmNvLmpw44KS44GU5Yip55So\r\n44GE44Gf44Gg44GN44GC44KK44GM44Go44GG44GU44GW44GE44G+44GZ44CC44GU5rOo5paH44Gu\r\n56K66KqN44KS44GK55+l44KJ44Gb44GE44Gf44GX44G+44GZ44CCPC9wPgo8cD7ms6jmlofnlarl\r\nj7c6IDI0OS0xMjM0NTY3LTEyMzQ1Njc8L3A+Cjx0YWJsZT4KPHRyPjx0ZD48YSBocmVmPSJodHRw\r\nczovL3d3dy5hbWF6b24uY28uanAvZHAvQjAwRVhNUEwwMT9yZWZfPXBlXzEyMyI+44Ki44K/44OD\r\n44KvIFpFUk8g5rSX5r+v5rSX5YmkIOipsOOCgeabv+OBiCAxODAwZzwvYT48L3RkPjx0ZD7mlbDp\r\nh486IDE8L3RkPjx0ZD7vv6UxLDIzNDwvdGQ+PC90cj4KPHRyPjx0ZD48YSBocmVmPSJodHRwczov\r\nL3d3dy5hbWF6b24uY28uanAvZ3AvcHJvZHVjdC9CMDBFWE1QTDAyL3JlZj14eXoiPuOCqOODquOC\r\nqOODvOODqyDjg4bjgqPjg4Pjgrfjg6Xjg5rjg7zjg5Hjg7wgMTgw57WEw5c1566xPC9hPjwvdGQ+\r\nPHRkPuaVsOmHjzogMjwvdGQ+PHRkPu+/pTQ5ODwvdGQ+PC90cj4KPC90YWJsZT4KPHA+5rOo5paH\r\n5ZCI6KiIOiDvv6UyLDIzMDwvcD4KPC9ib2R5PjwvaHRtbD4=\r\n------=_Part_12345--\r\n\r\nFrom order@rakuten.co.jp Mon Jun 15 21:30:20 2026\r\nFrom: =?ISO-2022-JP?B?GyRCM1pFNztUPmwbKEI=?= <order@rakuten.co.jp>\r\nTo: hata@example.com\r\nSubject: =?ISO-2022-JP?B?GyRCIVozWkU3O1Q+bCFbQ21KOEZiTUYkNDNORychSjwrRjBHWz8uJWEhPCVrIUsbKEI=?=\r\nDate: Mon, 15 Jun 2026 21:30:20 +0900\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=ISO-2022-JP\r\nContent-Transfer-Encoding: base64\r\n\r\nGyRCJE8kP01NGyhCCgobJEIkMyROJD8kUyRPM1pFNztUPmwkRyROJDRDbUo4JCIkaiQsJEgkJiQ0\r\nJDYkJCReJDkhIxsoQgoKWxskQjx1Q21IVjlmGyhCXSAxMjM0NTYtMjAyNjA2MTUtMDAxMjM0NTY3\r\nOApbGyRCQ21KOEZ8O34bKEJdIDIwMjYtMDYtMTUgMjE6MzA6MTIKChskQiIjPiZJSj5wSnMbKEIK\r\nGyRCPiZJSkw+ISclKCVqJSghPCVrGyhCIBskQiVIJSQlbCVDJUglWiE8JVEhPBsoQiAxMhskQiVt\r\nITwlaxsoQiAzGyRCR1w0LCQtGyhCChskQkMxMkEhJxsoQjEsNDgwGyRCMV8bKEIKGyRCOEQ/dCEn\r\nGyhCMgobJEI+JklKGyhCVVJMGyRCIScbKEJodHRwczovL2l0ZW0ucmFrdXRlbi5jby5qcC9zYW1w\r\nbGVzaG9wL2VsbGVhaXItMTJyLwoKGyRCPiZJSkw+ISclLSVlJS0lZSVDJUgbKEIgGyRCPyk0b01R\r\nQHY6XhsoQiAbJEI1TSRhQlgkKBsoQiA3NzBtbAobJEJDMTJBIScbKEIzMjgbJEIxXxsoQgobJEI4\r\nRD90IScbKEIzChskQj4mSUobKEJVUkwbJEIhJxsoQmh0dHBzOi8vaXRlbS5yYWt1dGVuLmNvLmpw\r\nL3NhbXBsZXNob3Ava3l1a3l1dHRvLTc3MC8KChskQj4uN1cbKEIgMyw5NDQbJEIxXxsoQgo=\r\n"};
 
-const APP_VERSION = 3;
+const APP_VERSION = 4;
 const LS_KEY = 'nichiyostock_v1';
 const DEFAULT_CATS = ['紙類', '洗剤・掃除', 'キッチン', 'バス・トイレ', '衛生用品', '食品・飲料', 'その他'];
 const DEFAULT_GMAIL_QUERY = 'from:(auto-confirm@amazon.co.jp OR order@rakuten.co.jp OR shopping-order-master@mail.yahoo.co.jp) (注文 OR ご注文)';
@@ -157,7 +157,7 @@ let currentTab = 'stock';
 let filterNeeds = false;
 
 function blankState() {
-  return { version: APP_VERSION, items: [], orders: [], seen: {},
+  return { version: APP_VERSION, items: [], orders: [], seen: {}, nameMap: {},
     categories: DEFAULT_CATS.slice(),
     settings: { gmailClientId: '', gmailQuery: DEFAULT_GMAIL_QUERY, syncMonths: 12, lastSyncAt: '', rakutenAppId: '', accounts: [] } };
 }
@@ -168,6 +168,7 @@ function migrate(s) {
   s.items = Array.isArray(s.items) ? s.items : [];
   s.orders = Array.isArray(s.orders) ? s.orders : [];
   s.seen = s.seen || {};
+  s.nameMap = s.nameMap || {};
   s.categories = (Array.isArray(s.categories) && s.categories.length) ? s.categories : b.categories;
   s.settings = Object.assign(b.settings, s.settings || {});
   if (!Array.isArray(s.settings.accounts)) s.settings.accounts = [];
@@ -178,6 +179,7 @@ function migrate(s) {
     it.unit = it.unit || '個';
     it.sites = it.sites || {};
     it.market = it.market || {};
+    it.ordered = it.ordered || null;
     it.category = it.category || 'その他';
   });
   return s;
@@ -329,9 +331,22 @@ function looksLikeRfc822(s) {
 }
 function splitMbox(s) {
   if (!/^From .*@/m.test(s.slice(0, 2000))) return null;
-  const parts = ('\n' + s).split(/\r?\n(?=From [^\s@]+@[^\s]+ )/).map(function(p) {
-    return p.replace(/^From [^\n]*\r?\n/, '').trim();
-  }).filter(function(p) { return p.length > 40; });
+  // 大きな .mbox（Google Takeout等）でも安全なよう、split/mapで巨大配列を作らず
+  // 「From 」区切り行を1回スキャンして各メール本文の範囲だけ切り出す
+  const re = /(^|\r?\n)From [^\s@]+@[^\s]+ [^\n]*\r?\n/g;
+  const marks = [];
+  let m;
+  while ((m = re.exec(s)) !== null) {
+    marks.push({ sep: m.index, bodyStart: re.lastIndex });
+    if (marks.length > 200000) break; // 暴走ガード
+  }
+  if (!marks.length) return null;
+  const parts = [];
+  for (let i = 0; i < marks.length; i++) {
+    const end = (i + 1 < marks.length) ? marks[i + 1].sep : s.length;
+    const body = s.slice(marks[i].bodyStart, end).trim();
+    if (body.length > 40) parts.push(body);
+  }
   return parts.length ? parts : null;
 }
 
@@ -621,8 +636,68 @@ function lastOrderOf(itemId) {
   });
   return best;
 }
-function needsBuy(it) { return it.stock <= it.reorderPoint && it.level <= 1; }
-function isUrgent(it) { return it.stock <= 0 && it.level === 0; }
+function needsBuy(it) { return !it.ordered && it.stock <= it.reorderPoint && it.level <= 1; }
+function isUrgent(it) { return !it.ordered && it.stock <= 0 && it.level === 0; }
+function nameKey(name) { return normalize(name).slice(0, 60); }
+function normUrl(u) { return String(u || '').toLowerCase().replace(/[?#][\s\S]*$/, '').replace(/\/+$/, ''); }
+// 既知の商品なら確認なしでひも付け先を決める（ASIN→商品URL→学習済み商品名の順）
+function autoTarget(p, site) {
+  if (p.asin) {
+    const hit = state.items.find(function(it) { return it.sites.amazon && it.sites.amazon.asin === p.asin; });
+    if (hit) return hit.id;
+  }
+  if (p.url) {
+    const nu = normUrl(p.url);
+    if (nu) {
+      const hit = state.items.find(function(it) { const si = it.sites[site]; return si && si.url && normUrl(si.url) === nu; });
+      if (hit) return hit.id;
+    }
+  }
+  const mapped = state.nameMap[nameKey(p.name)];
+  if (mapped && findItem(mapped)) return mapped;
+  return '';
+}
+// 購入間隔の中央値から「そろそろ切れる頃」を予測（履歴2件以上で有効）
+function predictDays(it) {
+  const ts = state.orders.filter(function(o) { return o.itemId === it.id; })
+    .map(function(o) { return new Date(o.date).getTime(); })
+    .filter(function(t) { return isFinite(t); }).sort(function(a, b) { return a - b; });
+  if (ts.length < 2) return null;
+  const gaps = [];
+  for (let i = 1; i < ts.length; i++) { const g = ts[i] - ts[i - 1]; if (g >= 2 * 86400000) gaps.push(g); }
+  if (!gaps.length) return null;
+  gaps.sort(function(a, b) { return a - b; });
+  const med = gaps[Math.floor(gaps.length / 2)];
+  return { daysLeft: Math.round((ts[ts.length - 1] + med - Date.now()) / 86400000),
+    cycleDays: Math.round(med / 86400000) };
+}
+function markOrdered(id, site, qty) {
+  const it = findItem(id); if (!it) return;
+  it.ordered = { at: new Date().toISOString(), site: site || '', qty: Math.max(1, qty || 1) };
+  save(); closeLayers(); if (currentTab === 'stock') renderStock();
+  toast('🚚 注文済みにしました: ' + it.name + '（届いたら「届いた」で反映）');
+}
+function markArrived(id) {
+  const it = findItem(id); if (!it || !it.ordered) return;
+  const q = it.ordered.qty || 1;
+  it.stock += q; it.level = 2; it.ordered = null;
+  save(); closeLayers(); render();
+  toast('📦 届いた分を反映: ' + it.name + '（ストック +' + q + '）');
+}
+function cancelOrdered(id) {
+  const it = findItem(id); if (!it) return;
+  it.ordered = null;
+  save(); closeLayers(); render();
+  toast('注文済みを取り消しました');
+}
+function daysSinceSync() {
+  const accs = state.settings.accounts || [];
+  let newest = '';
+  accs.forEach(function(a) { if (a.lastSyncAt && a.lastSyncAt > newest) newest = a.lastSyncAt; });
+  if (!newest) return null;
+  return Math.floor((Date.now() - new Date(newest).getTime()) / 86400000);
+}
+function goSync() { switchTab('import'); gmailSync(); }
 function guessCategory(name) {
   const n = normalize(name);
   const map = [
@@ -676,11 +751,26 @@ function levelBtns(it) {
   });
   return h + '</div>';
 }
+function predLine(it) {
+  if (it.ordered || needsBuy(it) || it.level < 2) return '';
+  const pr = predictDays(it);
+  if (!pr || pr.cycleDays < 3 || pr.daysLeft > 7 || pr.daysLeft < -pr.cycleDays) return '';
+  const t = pr.daysLeft >= 0 ? 'あと' + pr.daysLeft + '日ほど' : (-pr.daysLeft) + '日超過';
+  return '<div class="last">⏳ そろそろ切れる頃かも<span class="muted">（いつも約' + pr.cycleDays + '日周期・' + t + '）</span></div>';
+}
 function renderStock() {
   const kw = renderStock._kw || '';
   const needs = state.items.filter(needsBuy);
   const amazonBulk = needs.filter(function(it) { return it.sites.amazon && it.sites.amazon.asin; });
-  let h = '<div class="summary-bar">' +
+  let h = '';
+  const dss = daysSinceSync();
+  if (dss !== null && dss >= 3 && !renderStock._bannerOff) {
+    h += '<div class="card" style="border-color:var(--accent)"><div class="row">' +
+      '<span style="flex:1">📬 前回のメール取り込みから <b>' + dss + '日</b> 経っています</span>' +
+      '<button class="btn primary small" onclick="goSync()">Gmailから取り込む</button>' +
+      '<button class="btn small" onclick="renderStock._bannerOff=true;renderStock()">あとで</button></div></div>';
+  }
+  h += '<div class="summary-bar">' +
     '<button class="btn primary" onclick="openEdit(null)">＋ 品目を追加</button>' +
     '<input type="text" id="kwbox" placeholder="検索" value="' + esc(kw) + '" oninput="kwInput(this.value)" style="flex:1;min-width:120px">' +
     (needs.length ? '<button class="btn small" style="border-color:var(--warn);color:#9a6b00;background:var(--warn-soft)" onclick="filterNeeds=!filterNeeds;renderStock()">' +
@@ -707,16 +797,19 @@ function renderStock() {
       const cls = isUrgent(it) ? ' urgent' : (needsBuy(it) ? ' needs' : '');
       h += '<div class="item' + cls + '">' +
         '<div class="info" onclick="openEdit(\'' + it.id + '\')">' +
-        '<div class="name">' + esc(it.name) + (needsBuy(it) ? ' <span class="chip ' + (isUrgent(it) ? 'danger' : 'warn') + '">' + (isUrgent(it) ? '切れてます' : '要買い足し') + '</span>' : '') + '</div>' +
+        '<div class="name">' + esc(it.name) +
+        (it.ordered ? ' <span class="chip">🚚 ' + fmtDate(it.ordered.at) + ' 注文済み</span>' : '') +
+        (needsBuy(it) ? ' <span class="chip ' + (isUrgent(it) ? 'danger' : 'warn') + '">' + (isUrgent(it) ? '切れてます' : '要買い足し') + '</span>' : '') + '</div>' +
         '<div class="last">' + (lo ?
           '<span class="sitebadge ' + lo.site + '">' + SITE_BADGE[lo.site] + '</span> 前回 ' + fmtDate(lo.date) + '・' + fmtYen(lo.price) + (lo.qty > 1 ? '×' + lo.qty : '')
-          : '注文履歴なし') + '</div>' + priceLine(it) + '</div>' +
+          : '注文履歴なし') + '</div>' + priceLine(it) + predLine(it) + '</div>' +
         levelBtns(it) +
         '<div class="stock">' +
         '<button onclick="bumpStock(\'' + it.id + '\',-1)">−</button>' +
         '<span class="n">' + it.stock + '<small> ' + esc(it.unit) + '</small></span>' +
         '<button onclick="bumpStock(\'' + it.id + '\',1)">＋</button></div>' +
         (it.level === 0 && it.stock > 0 ? '<button class="btn small" onclick="openStock(\'' + it.id + '\')">📦 開封する(−1)</button>' : '') +
+        (it.ordered ? '<button class="btn small primary" onclick="markArrived(\'' + it.id + '\')">📦 届いた(+' + (it.ordered.qty || 1) + ')</button>' : '') +
         '<button class="btn small" onclick="openReorder(\'' + it.id + '\')">🛒 再注文</button>' +
         '</div>';
     });
@@ -733,15 +826,31 @@ function setLevel(id, lv) { const it = findItem(id); if (!it) return; it.level =
 function bumpStock(id, d) { const it = findItem(id); if (!it) return; it.stock = Math.max(0, it.stock + d); save(); renderStock(); }
 function openStock(id) { const it = findItem(id); if (!it || it.stock < 1) return; it.stock--; it.level = 2; save(); renderStock(); toast('開封: ' + it.name + '（残りストック ' + it.stock + '）'); }
 
-function openReorder(id) {
+function reorderOpen(id, site, url) {
+  window.open(url, '_blank');
+  openReorder(id, site);
+}
+function openReorder(id, askSite) {
   const it = findItem(id); if (!it) return;
   let h = '<h3>🛒 ' + esc(it.name) + ' を再注文</h3>';
+  if (askSite) {
+    const lo = lastOrderOf(it.id);
+    const q = (lo && lo.site === askSite && lo.qty) ? lo.qty : 1;
+    h += '<div style="background:var(--accent-soft);border:1px solid var(--accent);border-radius:10px;padding:10px;margin-bottom:10px">' +
+      SITE_LABEL[askSite] + 'のページを開きました。注文まで進めたら押してください:<br>' +
+      '<button class="btn primary" style="margin-top:6px" onclick="markOrdered(\'' + it.id + '\',\'' + askSite + '\',' + q + ')">🚚 注文済みにする（数量' + q + '）</button></div>';
+  } else if (it.ordered) {
+    h += '<div style="background:var(--accent-soft);border-radius:10px;padding:10px;margin-bottom:10px">' +
+      '🚚 ' + fmtDate(it.ordered.at) + ' に注文済み' + (SITE_LABEL[it.ordered.site] ? '（' + SITE_LABEL[it.ordered.site] + '）' : '') + ' ' +
+      '<button class="btn small primary" onclick="markArrived(\'' + it.id + '\')">📦 届いた(+' + (it.ordered.qty || 1) + ')</button> ' +
+      '<button class="btn small" onclick="cancelOrdered(\'' + it.id + '\')">取消</button></div>';
+  }
   ['amazon', 'rakuten', 'yahoo'].forEach(function(site) {
     const si = it.sites[site];
     if (!si || !(si.url || si.asin)) return;
     const url = (site === 'amazon' && si.asin) ? amazonCartUrl([{ asin: si.asin, qty: 1 }]) : si.url;
     const label = site === 'amazon' && si.asin ? 'Amazonのカートに入れる' : SITE_LABEL[site] + 'の商品ページを開く';
-    h += '<button class="opt" onclick="window.open(\'' + esc(url) + '\',\'_blank\')">' +
+    h += '<button class="opt" onclick="reorderOpen(\'' + it.id + '\',\'' + site + '\',\'' + esc(url) + '\')">' +
       '<span class="sitebadge ' + site + '">' + SITE_BADGE[site] + '</span><span>' + label +
       '<div class="muted">' + esc(si.name || '') + (si.lastPrice ? '・前回 ' + fmtYen(si.lastPrice) : '') + '</div></span></button>';
   });
@@ -752,7 +861,7 @@ function openReorder(id) {
       const lbl = p.kind === 'current'
         ? '現在の楽天最安 ' + fmtDate(p.at) + (p.shop ? '・' + esc(p.shop) : '') + (p.name ? '<br>' + esc(String(p.name).slice(0, 60)) : '')
         : '前回購入 ' + fmtDate(p.at);
-      h += '<button class="opt"' + (p.url ? ' onclick="window.open(\'' + esc(p.url) + '\',\'_blank\')"' : ' disabled') + '>' +
+      h += '<button class="opt"' + (p.url ? ' onclick="reorderOpen(\'' + it.id + '\',\'' + p.site + '\',\'' + esc(p.url) + '\')"' : ' disabled') + '>' +
         '<span class="sitebadge ' + p.site + '">' + SITE_BADGE[p.site] + '</span><span><b>' + fmtYen(p.price) + '</b>' +
         (i === 0 && pl.length > 1 ? ' <span class="chip">最安</span>' : '') +
         '<div class="muted">' + lbl + '</div></span></button>';
@@ -767,14 +876,27 @@ function openReorder(id) {
   showSheet(h);
 }
 function bulkAmazonCart() {
-  const list = state.items.filter(needsBuy)
-    .map(function(it) { return it.sites.amazon; })
-    .filter(function(si) { return si && si.asin; })
-    .map(function(si) { return { asin: si.asin, qty: 1, name: si.name }; });
-  if (!list.length) return;
-  if (!confirm('要買い足しのうちAmazonで買える ' + list.length + ' 件をまとめてカートに入れます:\n\n' +
-    list.map(function(x) { return '・' + x.name; }).join('\n'))) return;
-  window.open(amazonCartUrl(list), '_blank');
+  const items = state.items.filter(function(it) { return needsBuy(it) && it.sites.amazon && it.sites.amazon.asin; });
+  if (!items.length) return;
+  if (!confirm('要買い足しのうちAmazonで買える ' + items.length + ' 件をまとめてカートに入れます:\n\n' +
+    items.map(function(it) { return '・' + it.name; }).join('\n'))) return;
+  window.open(amazonCartUrl(items.map(function(it) { return { asin: it.sites.amazon.asin, qty: 1 }; })), '_blank');
+  bulkAmazonCart._ids = items.map(function(it) { return it.id; });
+  showSheet('<h3>🛒 Amazonまとめてカート</h3>' +
+    '<p class="muted">' + items.length + '件をカートに入れる画面を開きました。注文まで進めたら:</p>' +
+    '<div class="row"><button class="btn primary" onclick="bulkOrdered()">🚚 全部「注文済み」にする</button>' +
+    '<button class="btn" onclick="closeLayers()">閉じる</button></div>');
+}
+function bulkOrdered() {
+  const ids = bulkAmazonCart._ids || [];
+  const now = new Date().toISOString();
+  let n = 0;
+  ids.forEach(function(id) {
+    const it = findItem(id);
+    if (it) { it.ordered = { at: now, site: 'amazon', qty: 1 }; n++; }
+  });
+  save(); closeLayers(); renderStock();
+  toast('🚚 ' + n + '件を注文済みにしました（届いたら各品の「届いた」で反映）');
 }
 
 // ---------- 画面: 品目編集 ----------
@@ -837,6 +959,7 @@ function deleteItem(id) {
   if (!confirm('「' + it.name + '」を削除しますか？（注文履歴も消えます）')) return;
   state.items = state.items.filter(function(i) { return i.id !== id; });
   state.orders = state.orders.filter(function(o) { return o.itemId !== id; });
+  Object.keys(state.nameMap).forEach(function(k) { if (state.nameMap[k] === id) delete state.nameMap[k]; });
   save(); closeLayers(); renderStock(); toast('削除しました');
 }
 
@@ -880,27 +1003,43 @@ function renderImport() {
     });
   });
 }
+function classifyPending() {
+  const c = { fresh: 0, auto: 0, dup: 0, empty: 0 };
+  pending.forEach(function(o) {
+    if (!o.products.length) { c.empty++; return; }
+    o.products.forEach(function(p) {
+      if (p.dup) c.dup++;
+      else if (p.auto) c.auto++;
+      else c.fresh++;
+    });
+  });
+  return c;
+}
+function orderHead(o) {
+  return '<div class="order-head">' +
+    '<span class="sitebadge ' + (SITE_BADGE[o.site] ? o.site : 'amazon') + '" style="' + (SITE_BADGE[o.site] ? '' : 'background:#888') + '">' + (SITE_BADGE[o.site] || '?') + '</span>' +
+    '<b>' + fmtDate(o.date) + '</b>' +
+    '<span class="muted">' + esc(o.orderId || o.subject || '') + '</span></div>';
+}
 function renderPendingHtml() {
   if (!pending.length) return '';
-  let total = 0, dups = 0;
-  pending.forEach(function(o) { o.products.forEach(function(p) { total++; if (p.dup) dups++; }); });
-  let h = '<div class="card" style="border-color:var(--accent)"><h2>取り込み内容の確認（' + pending.length + '通・商品' + total + '件' +
-    (dups ? '・うち取込済み' + dups + '件' : '') + '）</h2>' +
-    '<p class="muted">チェックした商品だけ取り込みます。「登録先」で既存の品目にひも付けるか、新しい品目を作るか選べます。</p>';
+  const c = classifyPending();
+  let h = '<div class="card" style="border-color:var(--accent)"><h2>取り込み内容の確認（メール' + pending.length + '通）</h2>' +
+    '<p class="muted">' +
+    (c.fresh ? '<b>新しい商品 ' + c.fresh + '件</b>（登録先を確認してください）' : '新しい商品はありません') +
+    (c.auto ? '・おまかせ ' + c.auto + '件（前回と同じ商品）' : '') +
+    (c.dup ? '・取込済みスキップ ' + c.dup + '件' : '') +
+    (c.empty ? '・商品なし ' + c.empty + '通' : '') + '</p>';
+  // 新しい商品（要確認）
   pending.forEach(function(o, oi) {
-    h += '<div style="margin-bottom:14px"><div class="order-head">' +
-      '<span class="sitebadge ' + (SITE_BADGE[o.site] ? o.site : 'amazon') + '" style="' + (SITE_BADGE[o.site] ? '' : 'background:#888') + '">' + (SITE_BADGE[o.site] || '?') + '</span>' +
-      '<b>' + fmtDate(o.date) + '</b>' +
-      '<span class="muted">' + esc(o.orderId || o.subject || '') + '</span></div>';
-    if (!o.products.length) {
-      h += '<div class="muted">⚠ このメールから商品を検出できませんでした（形式が対応外の可能性）。件名: ' + esc(o.subject || '不明') +
-        (o.snippet ? '<details style="margin-top:4px"><summary>本文の冒頭を見る（調整用）</summary><div style="white-space:pre-wrap;font-size:11px;border:1px solid var(--line);border-radius:6px;padding:6px;margin-top:4px">' + esc(o.snippet) + '</div></details>' : '') + '</div>';
-    }
+    if (!o.products.some(function(p) { return !p.dup && !p.auto; })) return;
+    h += '<div style="margin-bottom:14px">' + orderHead(o);
     o.products.forEach(function(p, pi) {
+      if (p.dup || p.auto) return;
       const id = 'p-' + oi + '-' + pi;
-      h += '<div class="prod' + (p.dup ? ' dup' : '') + '">' +
-        '<input type="checkbox" id="' + id + '-c"' + (p.dup ? '' : ' checked') + '>' +
-        '<span class="pname">' + esc(p.name) + (p.dup ? ' <span class="chip">取込済み</span>' : '') + '</span>' +
+      h += '<div class="prod">' +
+        '<input type="checkbox" id="' + id + '-c" checked>' +
+        '<span class="pname">' + esc(p.name) + '</span>' +
         '<label class="muted">数量 <input class="qty" type="number" id="' + id + '-q" min="1" value="' + (p.qty || 1) + '"></label>' +
         '<label class="muted">価格 <input class="price" type="number" id="' + id + '-p" min="0" value="' + (p.price != null ? p.price : '') + '"></label>' +
         '<select id="' + id + '-sel">' + assignOptions(p, o.site) + '</select>' +
@@ -908,6 +1047,34 @@ function renderPendingHtml() {
     });
     h += '</div>';
   });
+  // おまかせ（既知の商品は自動ひも付け・開いて外せる）
+  if (c.auto) {
+    h += '<details style="margin:10px 0"' + (c.fresh ? '' : ' open') + '><summary>✨ おまかせ取り込み ' + c.auto + '件（前回と同じ商品として自動ひも付け）</summary>';
+    pending.forEach(function(o, oi) {
+      o.products.forEach(function(p, pi) {
+        if (p.dup || !p.auto) return;
+        const tgt = findItem(p.auto);
+        const id = 'p-' + oi + '-' + pi;
+        h += '<div class="prod"><input type="checkbox" id="' + id + '-c" checked>' +
+          '<span class="pname">' + esc(p.name) + '</span>' +
+          '<span class="muted">' + fmtDate(o.date) + '・' + fmtYen(p.price) + (p.qty > 1 ? '×' + p.qty : '') +
+          ' → <b>' + esc(tgt ? tgt.name : '?') + '</b></span></div>';
+      });
+    });
+    h += '</details>';
+  }
+  // 商品を検出できなかったメール
+  if (c.empty) {
+    h += '<details style="margin:10px 0"><summary>⚠ 商品を検出できなかったメール ' + c.empty + '通（発送通知など）</summary>';
+    pending.forEach(function(o) {
+      if (o.products.length) return;
+      h += '<div style="border-top:1px dashed var(--line);padding:6px 0">' + orderHead(o) +
+        '<div class="muted">件名: ' + esc(o.subject || '不明') +
+        (o.snippet ? '<details style="margin-top:4px"><summary>本文の冒頭を見る（調整用）</summary><div style="white-space:pre-wrap;font-size:11px;border:1px solid var(--line);border-radius:6px;padding:6px;margin-top:4px">' + esc(o.snippet) + '</div></details>' : '') +
+        '</div></div>';
+    });
+    h += '</details>';
+  }
   h += '<div class="row" style="justify-content:flex-end">' +
     '<button class="btn" onclick="pending=[];render()">クリア</button>' +
     '<button class="btn primary" onclick="applyImport()">✅ チェックした商品を取り込む</button></div></div>';
@@ -942,14 +1109,21 @@ function shortName(name) {
 function readFiles(files) {
   const list = Array.prototype.slice.call(files || []);
   if (!list.length) return;
+  const totalMB = list.reduce(function(s, f) { return s + (f.size || 0); }, 0) / 1048576;
+  toast(totalMB > 30 ? 'ファイルを読み込み中…（' + Math.round(totalMB) + 'MB・少しお待ちください）' : 'ファイルを読み込み中…');
   let done = 0; const bins = [];
+  function finish() { if (++done === list.length) { if (bins.length) ingest(bins); } }
   list.forEach(function(f) {
     const r = new FileReader();
     r.onload = function() {
-      bins.push(new TextDecoder('latin1').decode(r.result));
-      if (++done === list.length) ingest(bins);
+      try { bins.push(new TextDecoder('latin1').decode(r.result)); }
+      catch (e) { toast('「' + f.name + '」が大きすぎて読み込めませんでした。Gmailでラベルを付けて絞り込んでから書き出してください'); }
+      finish();
     };
-    r.onerror = function() { if (++done === list.length) ingest(bins); };
+    r.onerror = function() {
+      toast('「' + f.name + '」を読み込めませんでした（大きすぎる可能性）。ラベルで絞ってから書き出してください');
+      finish();
+    };
     r.readAsArrayBuffer(f);
   });
 }
@@ -969,6 +1143,7 @@ function ingest(bins) {
   orders.forEach(function(o) {
     o.products.forEach(function(p) {
       p.dup = !!state.seen[seenKey(o.site, o.orderId, p.name)];
+      p.auto = p.dup ? '' : autoTarget(p, o.site);
     });
   });
   // 同一注文が既にpendingにあれば置き換えない（単純に足す前に重複除去）
@@ -983,24 +1158,29 @@ function ingest(bins) {
   if (pa) pa.scrollIntoView({ behavior: 'smooth' });
 }
 function applyImport() {
-  let added = 0, newItems = 0, skipped = 0;
+  let added = 0, newItems = 0, autoN = 0, skipped = 0;
   pending.forEach(function(o, oi) {
     o.products.forEach(function(p, pi) {
       const id = 'p-' + oi + '-' + pi;
       const cb = document.getElementById(id + '-c');
-      if (!cb || !cb.checked) { skipped++; return; }
-      const qty = Math.max(1, parseInt(document.getElementById(id + '-q').value, 10) || 1);
-      const priceRaw = document.getElementById(id + '-p').value;
-      const price = priceRaw === '' ? null : Math.max(0, parseInt(priceRaw, 10) || 0);
-      const sel = document.getElementById(id + '-sel').value;
+      if (!cb || !cb.checked) { if (!p.dup) skipped++; return; }
+      // おまかせ行は数量/価格/登録先の入力欄が無い→解析値とp.autoを使う
+      const qEl = document.getElementById(id + '-q');
+      const qty = qEl ? Math.max(1, parseInt(qEl.value, 10) || 1) : Math.max(1, p.qty || 1);
+      const pEl = document.getElementById(id + '-p');
+      const price = pEl ? (pEl.value === '' ? null : Math.max(0, parseInt(pEl.value, 10) || 0))
+        : (p.price != null ? p.price : null);
+      const selEl = document.getElementById(id + '-sel');
+      const sel = selEl ? selEl.value : (p.auto || 'new');
       let it;
       if (sel === 'new') {
         it = { id: uid('i'), name: shortName(p.name), category: guessCategory(p.name),
-          level: 2, stock: 0, reorderPoint: 1, unit: '個', memo: '', sites: {} };
+          level: 2, stock: 0, reorderPoint: 1, unit: '個', memo: '', sites: {}, market: {}, ordered: null };
         state.items.push(it); newItems++;
       } else {
         it = findItem(sel);
         if (!it) { skipped++; return; }
+        if (!selEl) autoN++;
       }
       const dateIso = (o.date && !isNaN(o.date)) ? new Date(o.date).toISOString() : new Date().toISOString();
       state.orders.push({ id: uid('o'), itemId: it.id, site: o.site, orderId: o.orderId,
@@ -1013,12 +1193,19 @@ function applyImport() {
       }
       it.sites[o.site] = si;
       state.seen[seenKey(o.site, o.orderId, p.name)] = 1;
+      // 次回から確認なしでひも付くよう学習
+      state.nameMap[nameKey(p.name)] = it.id;
+      // 直近2週間の注文なら「注文済み（届き待ち）」として扱う
+      if (!it.ordered && (Date.now() - new Date(dateIso).getTime()) < 14 * 86400000) {
+        it.ordered = { at: dateIso, site: o.site, qty: qty };
+      }
       added++;
     });
   });
   pending = [];
   save(); render();
-  toast('取り込み完了: 注文' + added + '件（新規品目' + newItems + '件）' + (skipped ? '・スキップ' + skipped + '件' : ''));
+  toast('取り込み完了: 注文' + added + '件（新規品目' + newItems + '件' + (autoN ? '・おまかせ' + autoN + '件' : '') + '）' +
+    (skipped ? '・スキップ' + skipped + '件' : ''));
 }
 
 // ---------- Gmail API ----------
@@ -1425,6 +1612,77 @@ function runSelftest() {
     state.settings.accounts = [];
     return hit && hit.lastSyncAt === '2026-07-01' && !miss;
   });
+  t('おまかせ: ASIN/URL/学習名で既存品目に自動ひも付け', function() {
+    const bakItems = state.items, bakMap = state.nameMap;
+    state.items = [
+      { id: 'i1', name: 'A', sites: { amazon: { asin: 'B00EXMPL01' } } },
+      { id: 'i2', name: 'B', sites: { rakuten: { url: 'https://item.rakuten.co.jp/shop/xyz/' } } },
+      { id: 'i3', name: 'C', sites: {} }];
+    state.nameMap = {}; state.nameMap[nameKey('キュキュット 食器用洗剤 詰め替え')] = 'i3';
+    const a = autoTarget({ asin: 'B00EXMPL01', url: '', name: '何か' }, 'amazon');
+    const b = autoTarget({ asin: '', url: 'https://item.rakuten.co.jp/shop/xyz?ver=2', name: '別名' }, 'rakuten');
+    const c = autoTarget({ asin: '', url: '', name: 'キュキュット　食器用洗剤 詰め替え' }, 'yahoo');
+    const d = autoTarget({ asin: '', url: '', name: '完全に新しい商品' }, 'amazon');
+    state.items = bakItems; state.nameMap = bakMap;
+    return a === 'i1' && b === 'i2' && c === 'i3' && d === '';
+  });
+  t('注文済み: 要買い足し判定から除外される', function() {
+    const it = { stock: 0, reorderPoint: 1, level: 0, ordered: null };
+    const before = needsBuy(it) && isUrgent(it);
+    it.ordered = { at: '2026-07-09', site: 'amazon', qty: 2 };
+    return before === true && !needsBuy(it) && !isUrgent(it);
+  });
+  t('切れ予測: 30日周期の履歴から残り日数を計算', function() {
+    const bak = state.orders;
+    const day = 86400000, now = Date.now();
+    state.orders = [
+      { itemId: 'px', date: new Date(now - 85 * day).toISOString() },
+      { itemId: 'px', date: new Date(now - 55 * day).toISOString() },
+      { itemId: 'px', date: new Date(now - 25 * day).toISOString() }];
+    const pr = predictDays({ id: 'px' });
+    const single = predictDays({ id: 'none' });
+    state.orders = bak;
+    return pr && pr.cycleDays === 30 && pr.daysLeft === 5 && single === null;
+  });
+  t('マイグレーション: v3→v4（nameMap/ordered追加・既存データ保持）', function() {
+    const s = migrate({ version: 3, items: [{ id: 'x', name: 'テスト', stock: 2 }], orders: [{ id: 'o1' }], seen: { k: 1 } });
+    return s.version === APP_VERSION && s.nameMap && typeof s.nameMap === 'object' &&
+      s.items[0].ordered === null && s.items[0].stock === 2 && s.orders.length === 1 && s.seen.k === 1;
+  });
+  t('取込分類: 新規/おまかせ/取込済み/商品なしを数える', function() {
+    const bak = pending;
+    pending = [
+      { site: 'amazon', products: [{ name: 'n1' }, { name: 'n2', auto: 'i1' }, { name: 'n3', dup: true }] },
+      { site: 'rakuten', products: [] }];
+    const c = classifyPending();
+    pending = bak;
+    return c.fresh === 1 && c.auto === 1 && c.dup === 1 && c.empty === 1;
+  });
+  t('URL正規化: クエリと末尾スラッシュを無視して一致', function() {
+    return normUrl('https://item.rakuten.co.jp/S/X/?ver=2#a') === normUrl('https://item.rakuten.co.jp/s/x') &&
+      normUrl('') === '';
+  });
+  if (typeof SAMPLES !== 'undefined' && SAMPLES) {
+    t('mbox: Takeout風のFrom行（数値@ホスト＋日付）で分割', function() {
+      const tk = 'From 1752345678901234567@xxx Mon Jul 13 09:00:00 +0000 2026\r\n' + SAMPLES.amazon +
+        '\r\nFrom 1752999999999999999@xxx Sun Jun 15 21:30:00 +0000 2026\r\n' + SAMPLES.rakuten;
+      const parts = splitMbox(tk);
+      if (!parts || parts.length !== 2) return 'parts=' + (parts ? parts.length : 'null');
+      const os = parseInput(tk);
+      return os.length === 2 && os[0].site === 'amazon' && os[1].site === 'rakuten' &&
+        os[0].products.length === 2 && os[1].products.length === 2;
+    });
+    t('mbox: 大量メール（150通）でも分割・解析できる', function() {
+      let big = '';
+      for (let i = 0; i < 75; i++) {
+        big += 'From msg' + i + 'a@xxx Mon Jul 13 09:00:00 +0000 2026\r\n' + SAMPLES.amazon + '\r\n';
+        big += 'From msg' + i + 'b@xxx Sun Jun 15 21:30:00 +0000 2026\r\n' + SAMPLES.rakuten + '\r\n';
+      }
+      const parts = splitMbox(big);
+      const os = parseInput(big);
+      return parts && parts.length === 150 && os.length === 150;
+    });
+  }
   const okN = results.filter(function(r) { return r.ok; }).length;
   let h = '<div class="card"><h2>セルフテスト結果: ' + okN + ' / ' + results.length + ' 合格</h2><table class="st-table">';
   results.forEach(function(r) {
